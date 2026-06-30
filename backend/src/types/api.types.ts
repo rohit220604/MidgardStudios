@@ -16,3 +16,7 @@ export interface HealthResponse extends ApiSuccessResponse {
   status: "healthy";
   timestamp: string;
 }
+
+export interface DbTestResponse extends ApiSuccessResponse {
+  database: "connected";
+}
