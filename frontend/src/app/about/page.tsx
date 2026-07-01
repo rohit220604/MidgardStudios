@@ -1,19 +1,22 @@
+import type { Metadata } from "next";
+
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { SITE } from "@/lib/constants";
 
-export default function HomePage() {
+export const metadata: Metadata = {
+  title: "About",
+};
+
+export default function AboutPage() {
   return (
     <PageWrapper>
       <div className="mx-auto max-w-2xl space-y-4">
-        <p className="text-sm font-medium uppercase tracking-widest text-primary">
-          {SITE.name}
-        </p>
         <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-          Application Shell
+          About
         </h1>
         <p className="text-base leading-relaxed text-muted-foreground">
-          {SITE.tagline} This page is a placeholder while the core product
-          experience is built in upcoming stages.
+          {SITE.name} builds professional AI tooling for game creators. This
+          page will expand with product details in a future release.
         </p>
       </div>
     </PageWrapper>
