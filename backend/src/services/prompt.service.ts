@@ -26,4 +26,5 @@ export const buildOptimizedPrompt = (input: GenerateInput): string => {
   const subject = formatSubject(input.prompt);
 
   return `High quality ${genre} ${style} of ${environment} featuring ${subject}, digital ${style}, highly detailed, cinematic lighting.`;
+  // return "fantasy forest with glowing trees that are very good and glowing very well";
 };
