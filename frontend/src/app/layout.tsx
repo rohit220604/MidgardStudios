@@ -4,6 +4,7 @@ import { Space_Grotesk } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { SessionProvider } from "@/components/auth/session-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { SITE } from "@/lib/constants";
 
 import "./globals.css";
@@ -33,6 +34,7 @@ export default function RootLayout({
           <Navbar />
           <main className="flex flex-1 flex-col">{children}</main>
           <Footer />
+          <Toaster />
         </SessionProvider>
       </body>
     </html>

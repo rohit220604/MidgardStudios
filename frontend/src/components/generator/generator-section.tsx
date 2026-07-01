@@ -1,12 +1,26 @@
+"use client";
+
+import { useState } from "react";
 import { FadeIn } from "@/components/layout/fade-in";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GENERATOR } from "@/lib/landing";
+import { useGenerate } from "@/hooks/use-generate";
 
 import { GeneratorForm } from "./generator-form";
 import { GeneratorPreview } from "./generator-preview";
 
 export function GeneratorSection() {
+  const [formData, setFormData] = useState({
+    genre: "",
+    environment: "",
+    style: "",
+    inspiredBy: "",
+    prompt: "",
+  });
+
+  const { generate, isLoading, result, generationTime, error } = useGenerate();
+
   return (
     <Section
       id={GENERATOR.id}
@@ -36,13 +50,23 @@ export function GeneratorSection() {
               <CardTitle className="text-lg">Creative inputs</CardTitle>
             </CardHeader>
             <CardContent>
-              <GeneratorForm />
+              <GeneratorForm
+                formData={formData}
+                setFormData={setFormData}
+                onSubmit={generate}
+                isLoading={isLoading}
+              />
             </CardContent>
           </Card>
         </FadeIn>
 
         <FadeIn className="delay-100">
-          <GeneratorPreview />
+          <GeneratorPreview
+            isLoading={isLoading}
+            result={result}
+            generationTime={generationTime}
+            error={error}
+          />
         </FadeIn>
       </div>
     </Section>
