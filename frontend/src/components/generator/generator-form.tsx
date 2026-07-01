@@ -4,21 +4,21 @@ import { Wand2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
   GENERATOR,
   GENERATOR_FIELDS,
   INSPIRED_BY_OPTIONS,
 } from "@/lib/landing";
-import { cn } from "@/lib/utils";
 
 import { FormField } from "./form-field";
-
-const selectClassName = cn(
-  "h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm transition-colors outline-none",
-  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
-  "dark:bg-input/30",
-);
 
 export function GeneratorForm() {
   return (
@@ -57,21 +57,18 @@ export function GeneratorForm() {
         id={GENERATOR_FIELDS.inspiredBy.id}
         label={GENERATOR_FIELDS.inspiredBy.label}
       >
-        <select
-          id={GENERATOR_FIELDS.inspiredBy.id}
-          name="inspiredBy"
-          defaultValue=""
-          className={selectClassName}
-        >
-          <option value="" disabled>
-            {GENERATOR_FIELDS.inspiredBy.placeholder}
-          </option>
-          {INSPIRED_BY_OPTIONS.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+        <Select>
+          <SelectTrigger id={GENERATOR_FIELDS.inspiredBy.id} className="w-full">
+            <SelectValue placeholder={GENERATOR_FIELDS.inspiredBy.placeholder} />
+          </SelectTrigger>
+          <SelectContent>
+            {INSPIRED_BY_OPTIONS.map((option) => (
+              <SelectItem key={option} value={option}>
+                {option}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </FormField>
 
       <FormField id={GENERATOR_FIELDS.prompt.id} label={GENERATOR_FIELDS.prompt.label}>
@@ -84,7 +81,11 @@ export function GeneratorForm() {
         />
       </FormField>
 
-      <Button type="button" size="lg" className="h-12 w-full text-sm font-medium">
+      <Button
+        type="button"
+        size="lg"
+        className="h-12 w-full text-sm font-medium transition-transform hover:scale-[1.01]"
+      >
         <Wand2 className="size-4" />
         {GENERATOR.generateLabel}
       </Button>

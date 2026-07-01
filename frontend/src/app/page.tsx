@@ -1,3 +1,4 @@
+import { CtaSection } from "@/components/cta/cta";
 import { Features } from "@/components/features/features";
 import { GeneratorSection } from "@/components/generator/generator-section";
 import { Hero } from "@/components/hero/hero";
@@ -10,6 +11,7 @@ export default function HomePage() {
       <Features />
       <HowItWorks />
       <GeneratorSection />
+      <CtaSection />
     </>
   );
 }

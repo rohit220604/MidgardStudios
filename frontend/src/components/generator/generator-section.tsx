@@ -1,3 +1,4 @@
+import { FadeIn } from "@/components/layout/fade-in";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GENERATOR } from "@/lib/landing";
@@ -7,8 +8,16 @@ import { GeneratorPreview } from "./generator-preview";
 
 export function GeneratorSection() {
   return (
-    <Section id={GENERATOR.id} className="pb-20 md:pb-28">
-      <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
+    <Section
+      id={GENERATOR.id}
+      className="relative overflow-hidden border-y border-border/60 bg-gradient-to-b from-background via-card/10 to-background pb-24 md:pb-32"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-0 h-64 w-2/3 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl"
+      />
+
+      <FadeIn className="relative mx-auto mb-12 max-w-2xl text-center md:mb-16">
         <p className="mb-3 text-sm font-medium uppercase tracking-widest text-primary">
           Generator
         </p>
@@ -18,19 +27,23 @@ export function GeneratorSection() {
         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
           {GENERATOR.subtitle}
         </p>
-      </div>
+      </FadeIn>
 
-      <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
-        <Card className="border-border/60 bg-card/50">
-          <CardHeader>
-            <CardTitle className="text-lg">Creative inputs</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <GeneratorForm />
-          </CardContent>
-        </Card>
+      <div className="relative grid gap-8 lg:grid-cols-2 lg:gap-10">
+        <FadeIn>
+          <Card className="border-border/60 bg-card/60 shadow-lg shadow-black/10">
+            <CardHeader>
+              <CardTitle className="text-lg">Creative inputs</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <GeneratorForm />
+            </CardContent>
+          </Card>
+        </FadeIn>
 
-        <GeneratorPreview />
+        <FadeIn className="delay-100">
+          <GeneratorPreview />
+        </FadeIn>
       </div>
     </Section>
   );

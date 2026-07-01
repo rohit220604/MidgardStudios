@@ -1,48 +1,50 @@
 export const HERO = {
   title: "Create Stunning Game Concept Art with AI",
   subtitle:
-    "Transform your ideas into production-ready concept art using AI-powered tools built for game creators.",
+    "Generate production-ready game concept art using AI designed specifically for game developers and artists.",
   primaryCta: "Start Creating",
-  secondaryCta: "View Gallery",
+  secondaryCta: "Explore Gallery",
 } as const;
 
 export const FEATURES = [
   {
     icon: "palette",
     title: "Concept Art Generation",
-    description:
-      "Generate high-quality concept art from structured prompts.",
-  },
-  {
-    icon: "zap",
-    title: "Fast Workflow",
-    description: "Turn ideas into visuals within seconds.",
+    description: "Generate game-ready artwork from structured prompts.",
   },
   {
     icon: "gamepad",
-    title: "Built for Game Developers",
-    description: "Designed specifically for game artists and indie studios.",
+    title: "Built for Game Creators",
+    description: "Purpose-built workflow for indie studios and developers.",
+  },
+  {
+    icon: "cloud",
+    title: "Cloud Gallery",
+    description: "Save and revisit your creations anytime.",
   },
 ] as const;
 
 export const HOW_IT_WORKS_STEPS = [
   {
     step: 1,
-    title: "Describe your game world",
+    title: "Describe",
     description:
-      "Define genre, environment, style, and creative direction in a structured workflow.",
+      "Define your genre, environment, art style, and creative vision.",
+    icon: "pen",
   },
   {
     step: 2,
-    title: "AI generates concept art",
+    title: "Generate",
     description:
-      "Midgard Studios transforms your inputs into polished visual concepts.",
+      "Midgard Studios transforms your inputs into polished concept art.",
+    icon: "sparkles",
   },
   {
     step: 3,
-    title: "Save and iterate",
+    title: "Create",
     description:
-      "Refine prompts, regenerate variations, and build your creative library.",
+      "Save, iterate, and build a library of production-ready visuals.",
+    icon: "image",
   },
 ] as const;
 
@@ -62,7 +64,7 @@ export const GENERATOR = {
   subtitle:
     "Configure your creative direction and generate production-ready concept art.",
   previewMessage: "Your generated artwork will appear here.",
-  generateLabel: "Generate Concept Art",
+  generateLabel: "Generate",
 } as const;
 
 export const GENERATOR_FIELDS = {
@@ -92,4 +94,11 @@ export const GENERATOR_FIELDS = {
     placeholder:
       "Describe key subjects, mood, lighting, or composition details...",
   },
+} as const;
+
+export const CTA = {
+  title: "Ready to create your next world?",
+  subtitle:
+    "Start generating concept art tailored for game development workflows.",
+  buttonLabel: "Start Generating",
 } as const;
