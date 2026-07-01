@@ -6,6 +6,7 @@ import { uploadImageFromUrl } from "../services/cloudinary.service.js";
 import { buildOptimizedPrompt } from "../services/prompt.service.js";
 import type { GenerateResponse } from "../types/generate.types.js";
 import { parseGenerateInput } from "../utils/generate.validation.js";
+import type { AuthenticatedRequest } from "../middleware/auth.middleware.js";
 
 export const postGenerate = async (
   req: Request,
@@ -13,6 +14,11 @@ export const postGenerate = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    const authReq = req as AuthenticatedRequest;
+    if (!authReq.user) {
+      throw new AppError(401, "Not authenticated");
+    }
+
     const input = parseGenerateInput(req.body);
     const optimizedPrompt = buildOptimizedPrompt(input);
     const pollinationsImageUrl = await generateImage(optimizedPrompt);
@@ -31,6 +37,7 @@ export const postGenerate = async (
         style: input.style,
         prompt: optimizedPrompt,
         imageUrl: cloudinaryImageUrl,
+        userId: authReq.user.id,
       });
     } catch (error) {
       next(new AppError(500, "Database write failed", error));

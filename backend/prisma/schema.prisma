@@ -7,6 +7,18 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id          String       @id @default(cuid())
+  email       String       @unique
+  name        String?
+  image       String?
+  provider    String
+  createdAt   DateTime     @default(now())
+  generations Generation[]
+
+  @@map("users")
+}
+
 model Generation {
   id          String   @id @default(cuid())
   genre       String
@@ -16,6 +28,8 @@ model Generation {
   imageUrl    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 
   @@map("generations")
 }

@@ -8,8 +8,9 @@ export const createGeneration = async (
   return prisma.generation.create({ data });
 };
 
-export const getAllGenerations = async (): Promise<Generation[]> => {
+export const getUserGenerations = async (userId: string): Promise<Generation[]> => {
   return prisma.generation.findMany({
+    where: { userId },
     orderBy: { createdAt: "desc" },
   });
 };
