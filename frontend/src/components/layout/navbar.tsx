@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LANGUAGES, NAV_LINKS, SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { UserMenu } from "@/components/auth/user-menu";
 
 import { Container } from "./container";
 
@@ -47,11 +48,15 @@ export function Navbar() {
               </Link>
             ))}
 
-            <LanguageToggle />
+            <div className="flex items-center gap-4 border-l border-border/60 pl-8">
+              <LanguageToggle />
+              <UserMenu />
+            </div>
           </nav>
 
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-3 md:hidden">
             <LanguageToggle />
+            <UserMenu />
             <Button
               type="button"
               variant="ghost"
