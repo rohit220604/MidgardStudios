@@ -5,6 +5,7 @@ export interface GalleryItem {
   genre: string;
   environment: string;
   style: string;
+  inspiredBy: string;
   createdAt: string;
 }
 

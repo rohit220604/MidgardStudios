@@ -1,7 +1,7 @@
 import { AppError } from "../middleware/error.middleware.js";
 import type { GenerateInput } from "../types/generate.types.js";
 
-const REQUIRED_FIELDS = ["genre", "environment", "style", "prompt"] as const;
+const REQUIRED_FIELDS = ["genre", "environment", "style", "inspiredBy", "prompt"] as const;
 
 const isNonEmptyString = (value: unknown): value is string => {
   return typeof value === "string" && value.trim().length > 0;
@@ -25,6 +25,7 @@ export const parseGenerateInput = (body: unknown): GenerateInput => {
     genre: (record.genre as string).trim(),
     environment: (record.environment as string).trim(),
     style: (record.style as string).trim(),
+    inspiredBy: (record.inspiredBy as string).trim(),
     prompt: (record.prompt as string).trim(),
   };
 };

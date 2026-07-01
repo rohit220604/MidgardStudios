@@ -49,6 +49,7 @@ export const HOW_IT_WORKS_STEPS = [
 ] as const;
 
 export const INSPIRED_BY_OPTIONS = [
+  "Custom",
   "Dark Souls",
   "Elden Ring",
   "Studio Ghibli",

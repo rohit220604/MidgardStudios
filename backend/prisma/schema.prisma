@@ -24,6 +24,7 @@ model Generation {
   genre       String
   environment String
   style       String
+  inspiredBy  String?
   prompt      String
   imageUrl    String
   createdAt   DateTime @default(now())

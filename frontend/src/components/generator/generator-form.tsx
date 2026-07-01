@@ -1,6 +1,7 @@
 "use client";
 
-import { Wand2, Loader2 } from "lucide-react";
+import { Loader2, RotateCcw, Wand2, X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,16 +18,24 @@ import {
   INSPIRED_BY_OPTIONS,
 } from "@/lib/landing";
 import { useAuth } from "@/hooks/use-auth";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import type { GenerateInput } from "@/types/generation";
+import type { GenerateInput, GenerateResponse } from "@/types/generation";
 
 import { FormField } from "./form-field";
 
 interface GeneratorFormProps {
   formData: GenerateInput;
   setFormData: React.Dispatch<React.SetStateAction<GenerateInput>>;
-  onSubmit: (input: GenerateInput, userEmail: string) => Promise<any>;
+  onSubmit: (
+    input: GenerateInput,
+    userEmail: string,
+  ) => Promise<GenerateResponse["generation"]>;
   isLoading: boolean;
+  isEditingPreviousPrompt?: boolean;
+  prefillAnimated?: boolean;
+  changedFields?: Partial<Record<keyof GenerateInput, boolean>>;
+  onCancelEditing?: () => void;
 }
 
 export function GeneratorForm({
@@ -34,8 +43,18 @@ export function GeneratorForm({
   setFormData,
   onSubmit,
   isLoading,
+  isEditingPreviousPrompt = false,
+  prefillAnimated = false,
+  changedFields = {},
+  onCancelEditing,
 }: GeneratorFormProps) {
   const { isAuthenticated, user } = useAuth();
+  const getFieldClassName = (field: keyof GenerateInput) =>
+    cn(
+      "transition-all duration-300",
+      prefillAnimated && "animate-in fade-in-0 slide-in-from-bottom-1 duration-500",
+      changedFields[field] && "ring-2 ring-primary/60 ring-offset-2 ring-offset-background",
+    );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -70,13 +89,33 @@ export function GeneratorForm({
 
     try {
       await onSubmit(formData, user.email);
-    } catch (error) {
+    } catch {
       // Error handles in hook with toast
     }
   };
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
+      {isEditingPreviousPrompt && (
+        <div className="flex flex-col gap-3 rounded-lg border border-primary/30 bg-primary/10 p-3 sm:flex-row sm:items-center sm:justify-between">
+          <Badge className="h-6 gap-1.5 rounded-md bg-primary/90 text-primary-foreground">
+            <RotateCcw className="h-3.5 w-3.5" />
+            Editing Previous Prompt
+          </Badge>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onCancelEditing}
+            disabled={isLoading}
+            className="h-8 border-primary/30 bg-background/40"
+          >
+            <X className="h-3.5 w-3.5" />
+            Cancel Editing
+          </Button>
+        </div>
+      )}
+
       <FormField id={GENERATOR_FIELDS.genre.id} label={GENERATOR_FIELDS.genre.label}>
         <Input
           id={GENERATOR_FIELDS.genre.id}
@@ -86,6 +125,7 @@ export function GeneratorForm({
           value={formData.genre}
           onChange={handleInputChange}
           disabled={isLoading}
+          className={getFieldClassName("genre")}
         />
       </FormField>
 
@@ -101,6 +141,7 @@ export function GeneratorForm({
           value={formData.environment}
           onChange={handleInputChange}
           disabled={isLoading}
+          className={getFieldClassName("environment")}
         />
       </FormField>
 
@@ -113,6 +154,7 @@ export function GeneratorForm({
           value={formData.style}
           onChange={handleInputChange}
           disabled={isLoading}
+          className={getFieldClassName("style")}
         />
       </FormField>
 
@@ -125,7 +167,10 @@ export function GeneratorForm({
           onValueChange={handleSelectChange}
           disabled={isLoading}
         >
-          <SelectTrigger id={GENERATOR_FIELDS.inspiredBy.id} className="w-full">
+          <SelectTrigger
+            id={GENERATOR_FIELDS.inspiredBy.id}
+            className={cn("w-full", getFieldClassName("inspiredBy"))}
+          >
             <SelectValue placeholder={GENERATOR_FIELDS.inspiredBy.placeholder} />
           </SelectTrigger>
           <SelectContent>
@@ -144,7 +189,7 @@ export function GeneratorForm({
           name="prompt"
           placeholder={GENERATOR_FIELDS.prompt.placeholder}
           rows={5}
-          className="min-h-32 resize-none"
+          className={cn("min-h-32 resize-none", getFieldClassName("prompt"))}
           value={formData.prompt}
           onChange={handleInputChange}
           disabled={isLoading}

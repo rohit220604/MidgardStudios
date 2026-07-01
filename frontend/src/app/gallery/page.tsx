@@ -5,10 +5,9 @@ import { PageWrapper } from "@/components/layout/page-wrapper";
 import { useAuth } from "@/hooks/use-auth";
 import { useGallery } from "@/hooks/use-gallery";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { GenerationCard } from "@/components/gallery/generation-card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, RefreshCw, LogIn, Image as ImageIcon, RotateCw, Sparkles } from "lucide-react";
-import { toast } from "sonner";
+import { LogIn, Image as ImageIcon, RotateCw, Sparkles } from "lucide-react";
 
 export default function GalleryPage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
@@ -104,64 +103,7 @@ export default function GalleryPage() {
           // Gallery Grid View
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
             {generations.map((gen) => (
-              <Card
-                key={gen.id}
-                className="overflow-hidden border border-border/80 bg-card/45 backdrop-blur-sm group hover:border-primary/50 transition-all duration-300 shadow-lg flex flex-col h-full"
-              >
-                {/* Image & Tags Container */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted/30 border-b border-border/40">
-                  <img
-                    src={gen.imageUrl}
-                    alt={gen.prompt}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  
-                  {/* Genre and Style Badges */}
-                  <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 pointer-events-none">
-                    <span className="bg-background/80 backdrop-blur-xs border border-border/40 text-[10px] px-2 py-0.5 rounded-md font-semibold text-foreground text-opacity-95 shadow-sm">
-                      {gen.genre}
-                    </span>
-                    <span className="bg-background/80 backdrop-blur-xs border border-border/40 text-[10px] px-2 py-0.5 rounded-md font-semibold text-foreground text-opacity-95 shadow-sm">
-                      {gen.style}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Card Body */}
-                <CardContent className="p-4 flex flex-col flex-1 justify-between gap-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center text-xs text-muted-foreground">
-                      <span className="font-semibold text-primary/80 truncate max-w-[150px]">
-                        {gen.environment}
-                      </span>
-                      <span className="flex items-center gap-1.5 font-medium">
-                        <Calendar className="h-3.5 w-3.5 text-primary/60" />
-                        {new Date(gen.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-
-                    <p className="text-sm text-foreground/95 leading-relaxed line-clamp-3 hover:line-clamp-none transition-all duration-300">
-                      {gen.prompt}
-                    </p>
-                  </div>
-
-                  <div className="flex gap-2 border-t border-border/40 pt-3">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        toast.info(
-                          "Regeneration triggered (UI placeholder)",
-                        )
-                      }
-                      className="w-full h-8 gap-1.5 border-border/60 hover:bg-muted text-foreground transition-all duration-200"
-                    >
-                      <RefreshCw className="h-3.5 w-3.5" />
-                      Regenerate
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <GenerationCard key={gen.id} generation={gen} />
             ))}
           </div>
         )}

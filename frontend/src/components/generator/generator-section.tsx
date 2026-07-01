@@ -1,29 +1,101 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FadeIn } from "@/components/layout/fade-in";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GENERATOR } from "@/lib/landing";
+import {
+  clearRegenerationInput,
+  markGalleryNeedsRefresh,
+  readRegenerationInput,
+  type RegenerationInput,
+} from "@/lib/regeneration";
 import { useGenerate } from "@/hooks/use-generate";
+import type { GenerateInput } from "@/types/generation";
 
 import { GeneratorForm } from "./generator-form";
 import { GeneratorPreview } from "./generator-preview";
 
+const EMPTY_FORM_DATA: GenerateInput = {
+  genre: "",
+  environment: "",
+  style: "",
+  inspiredBy: "",
+  prompt: "",
+};
+
 export function GeneratorSection() {
-  const [formData, setFormData] = useState({
-    genre: "",
-    environment: "",
-    style: "",
-    inspiredBy: "",
-    prompt: "",
-  });
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [formData, setFormData] = useState<GenerateInput>(EMPTY_FORM_DATA);
+  const [regenerationInput, setRegenerationInput] = useState<RegenerationInput | null>(null);
+  const [prefillAnimated, setPrefillAnimated] = useState(false);
 
   const { generate, isLoading, result, generationTime, error } = useGenerate();
+  const changedFields = useMemo(() => {
+    if (!regenerationInput) {
+      return {};
+    }
+
+    return (Object.keys(regenerationInput) as (keyof GenerateInput)[]).reduce<
+      Partial<Record<keyof GenerateInput, boolean>>
+    >((fields, key) => {
+      fields[key] = formData[key] !== regenerationInput[key];
+      return fields;
+    }, {});
+  }, [formData, regenerationInput]);
+
+  useEffect(() => {
+    const input = readRegenerationInput();
+
+    if (!input) {
+      return;
+    }
+
+    const prefillTimer = window.setTimeout(() => {
+      setRegenerationInput(input);
+      setFormData(input);
+      setPrefillAnimated(true);
+    }, 0);
+
+    window.requestAnimationFrame(() => {
+      sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    const animationTimer = window.setTimeout(() => {
+      setPrefillAnimated(false);
+    }, 900);
+
+    return () => {
+      window.clearTimeout(prefillTimer);
+      window.clearTimeout(animationTimer);
+    };
+  }, []);
+
+  const handleCancelEditing = () => {
+    clearRegenerationInput();
+    setRegenerationInput(null);
+    setFormData(EMPTY_FORM_DATA);
+    setPrefillAnimated(false);
+  };
+
+  const handleGenerate = async (input: GenerateInput, userEmail: string) => {
+    const generation = await generate(input, userEmail);
+
+    if (regenerationInput) {
+      clearRegenerationInput();
+      markGalleryNeedsRefresh();
+      setRegenerationInput(null);
+      setPrefillAnimated(false);
+    }
+
+    return generation;
+  };
 
   return (
     <Section
       id={GENERATOR.id}
+      ref={sectionRef}
       className="relative overflow-hidden border-y border-border/60 bg-gradient-to-b from-background via-card/10 to-background pb-24 md:pb-32"
     >
       <div
@@ -53,8 +125,12 @@ export function GeneratorSection() {
               <GeneratorForm
                 formData={formData}
                 setFormData={setFormData}
-                onSubmit={generate}
+                onSubmit={handleGenerate}
                 isLoading={isLoading}
+                isEditingPreviousPrompt={Boolean(regenerationInput)}
+                prefillAnimated={prefillAnimated}
+                changedFields={changedFields}
+                onCancelEditing={handleCancelEditing}
               />
             </CardContent>
           </Card>

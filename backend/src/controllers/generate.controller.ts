@@ -35,6 +35,7 @@ export const postGenerate = async (
         genre: input.genre,
         environment: input.environment,
         style: input.style,
+        inspiredBy: input.inspiredBy,
         prompt: optimizedPrompt,
         imageUrl: cloudinaryImageUrl,
         userId: authReq.user.id,

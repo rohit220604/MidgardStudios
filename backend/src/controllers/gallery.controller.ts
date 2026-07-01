@@ -13,6 +13,7 @@ const toGalleryItem = (
   genre: generation.genre,
   environment: generation.environment,
   style: generation.style,
+  inspiredBy: generation.inspiredBy ?? "Custom",
   createdAt: generation.createdAt.toISOString(),
 });
 

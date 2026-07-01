@@ -4,6 +4,7 @@ export interface GenerateInput {
   genre: string;
   environment: string;
   style: string;
+  inspiredBy: string;
   prompt: string;
 }
 

@@ -56,6 +56,7 @@ export const postRegenerate = async (
         genre: original.genre,
         environment: original.environment,
         style: original.style,
+        inspiredBy: original.inspiredBy ?? "Custom",
         prompt: promptToUse,
         imageUrl: cloudinaryImageUrl,
         userId: authReq.user.id,

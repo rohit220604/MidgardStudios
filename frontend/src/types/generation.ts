@@ -3,6 +3,7 @@ export interface Generation {
   genre: string;
   environment: string;
   style: string;
+  inspiredBy: string;
   prompt: string;
   imageUrl: string;
   createdAt: string;

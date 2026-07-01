@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { api } from "@/lib/api";
 import type { GenerateInput, GenerateResponse } from "@/types/generation";
 import { toast } from "sonner";
@@ -30,8 +31,13 @@ export function useGenerate() {
       setGenerationTime(timeElapsed);
       toast.success("AI image generated successfully!");
       return response.data.generation;
-    } catch (err: any) {
-      const errMsg = err?.response?.data?.message || err?.message || "Failed to generate image";
+    } catch (err: unknown) {
+      const errMsg =
+        axios.isAxiosError<{ message?: string }>(err) && err.response?.data?.message
+          ? err.response.data.message
+          : err instanceof Error
+            ? err.message
+            : "Failed to generate image";
       setError(errMsg);
       toast.error(errMsg);
       throw err;

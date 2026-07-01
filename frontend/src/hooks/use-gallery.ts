@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
+import axios from "axios";
 import { api } from "@/lib/api";
+import { consumeGalleryRefreshFlag } from "@/lib/regeneration";
 import type { Generation } from "@/types/generation";
 import { toast } from "sonner";
 
@@ -18,8 +20,13 @@ export function useGallery(userEmail?: string) {
         },
       });
       setGenerations(response.data);
-    } catch (err: any) {
-      const errMsg = err?.response?.data?.message || err?.message || "Failed to fetch gallery";
+    } catch (err: unknown) {
+      const errMsg =
+        axios.isAxiosError<{ message?: string }>(err) && err.response?.data?.message
+          ? err.response.data.message
+          : err instanceof Error
+            ? err.message
+            : "Failed to fetch gallery";
       setError(errMsg);
       toast.error(errMsg);
     } finally {
@@ -29,8 +36,34 @@ export function useGallery(userEmail?: string) {
 
   useEffect(() => {
     if (userEmail) {
-      fetchGallery(userEmail);
+      const fetchTimer = window.setTimeout(() => {
+        fetchGallery(userEmail);
+      }, 0);
+
+      return () => window.clearTimeout(fetchTimer);
     }
+  }, [userEmail, fetchGallery]);
+
+  useEffect(() => {
+    if (!userEmail) {
+      return;
+    }
+
+    const refreshIfNeeded = () => {
+      if (consumeGalleryRefreshFlag()) {
+        fetchGallery(userEmail);
+      }
+    };
+
+    const refreshTimer = window.setTimeout(refreshIfNeeded, 0);
+    window.addEventListener("focus", refreshIfNeeded);
+    document.addEventListener("visibilitychange", refreshIfNeeded);
+
+    return () => {
+      window.clearTimeout(refreshTimer);
+      window.removeEventListener("focus", refreshIfNeeded);
+      document.removeEventListener("visibilitychange", refreshIfNeeded);
+    };
   }, [userEmail, fetchGallery]);
 
   return {

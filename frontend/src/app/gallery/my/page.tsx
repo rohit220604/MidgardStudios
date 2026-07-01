@@ -5,10 +5,9 @@ import { PageWrapper } from "@/components/layout/page-wrapper";
 import { useAuth } from "@/hooks/use-auth";
 import { useGallery } from "@/hooks/use-gallery";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { GenerationCard } from "@/components/gallery/generation-card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, RefreshCw, LogIn, Image as ImageIcon, RotateCw } from "lucide-react";
-import { toast } from "sonner";
+import { LogIn, Image as ImageIcon, RotateCw } from "lucide-react";
 
 export default function MyGalleryPage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
@@ -97,52 +96,7 @@ export default function MyGalleryPage() {
           // Gallery Grid View
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
             {generations.map((gen) => (
-              <Card
-                key={gen.id}
-                className="overflow-hidden border border-border/80 bg-card/45 backdrop-blur-sm group hover:border-primary/50 transition-all duration-300 shadow-lg"
-              >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted/30 border-b border-border/40">
-                  <img
-                    src={gen.imageUrl}
-                    alt={gen.prompt}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                    <span className="text-[10px] text-muted-foreground/80 font-mono truncate">
-                      ID: {gen.id}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <CardContent className="p-4 space-y-4">
-                  <p className="text-sm text-foreground/95 leading-relaxed line-clamp-3 hover:line-clamp-none transition-all duration-300">
-                    {gen.prompt}
-                  </p>
-
-                  <div className="flex justify-between items-center text-xs text-muted-foreground border-t border-border/40 pt-3">
-                    <span className="flex items-center gap-1.5 font-medium">
-                      <Calendar className="h-3.5 w-3.5 text-primary/70" />
-                      {new Date(gen.createdAt).toLocaleDateString()}
-                    </span>
-
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        toast.info(
-                          "Regeneration triggered (UI placeholder)",
-                        )
-                      }
-                      className="h-7 px-2.5 gap-1 border-border/60 hover:bg-muted text-foreground transition-all duration-200"
-                    >
-                      <RefreshCw className="h-3 w-3" />
-                      Regenerate
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <GenerationCard key={gen.id} generation={gen} variant="compact" />
             ))}
           </div>
         )}

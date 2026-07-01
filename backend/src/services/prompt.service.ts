@@ -23,8 +23,9 @@ export const buildOptimizedPrompt = (input: GenerateInput): string => {
   const genre = formatGenre(input.genre);
   const environment = withLeadingArticle(input.environment);
   const style = input.style.trim().toLowerCase();
+  const inspiredBy = input.inspiredBy.trim();
   const subject = formatSubject(input.prompt);
 
-  return `High quality ${genre} ${style} of ${environment} featuring ${subject}, digital ${style}, highly detailed, cinematic lighting.`;
+  return `High quality ${genre} ${style} of ${environment} featuring ${subject}, inspired by ${inspiredBy}, digital ${style}, highly detailed, cinematic lighting.`;
   // return "fantasy forest with glowing trees that are very good and glowing very well";
 };
