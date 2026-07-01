@@ -2,8 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FadeIn } from "@/components/layout/fade-in";
-import { Section } from "@/components/layout/section";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { GENERATOR } from "@/lib/landing";
 import {
   clearRegenerationInput,
@@ -12,6 +11,7 @@ import {
   type RegenerationInput,
 } from "@/lib/regeneration";
 import { useGenerate } from "@/hooks/use-generate";
+import { SITE } from "@/lib/constants";
 import type { GenerateInput } from "@/types/generation";
 
 import { GeneratorForm } from "./generator-form";
@@ -26,7 +26,7 @@ const EMPTY_FORM_DATA: GenerateInput = {
 };
 
 export function GeneratorSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const [formData, setFormData] = useState<GenerateInput>(EMPTY_FORM_DATA);
   const [regenerationInput, setRegenerationInput] = useState<RegenerationInput | null>(null);
   const [prefillAnimated, setPrefillAnimated] = useState(false);
@@ -93,58 +93,49 @@ export function GeneratorSection() {
   };
 
   return (
-    <Section
+    <div
       id={GENERATOR.id}
       ref={sectionRef}
-      className="relative overflow-hidden border-y border-border/60 bg-gradient-to-b from-background via-card/10 to-background pb-24 md:pb-32"
+      className="flex flex-1 items-center bg-background px-4 py-4 sm:px-6 lg:px-8"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-64 w-2/3 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl"
-      />
-
-      <FadeIn className="relative mx-auto mb-12 max-w-2xl text-center md:mb-16">
-        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-primary">
-          Generator
-        </p>
-        <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-          {GENERATOR.title}
-        </h2>
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-          {GENERATOR.subtitle}
-        </p>
-      </FadeIn>
-
-      <div className="relative grid gap-8 lg:grid-cols-2 lg:gap-10">
-        <FadeIn>
-          <Card className="border-border/60 bg-card/60 shadow-lg shadow-black/10">
-            <CardHeader>
-              <CardTitle className="text-lg">Creative inputs</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <GeneratorForm
-                formData={formData}
-                setFormData={setFormData}
-                onSubmit={handleGenerate}
-                isLoading={isLoading}
-                isEditingPreviousPrompt={Boolean(regenerationInput)}
-                prefillAnimated={prefillAnimated}
-                changedFields={changedFields}
-                onCancelEditing={handleCancelEditing}
-              />
-            </CardContent>
-          </Card>
+      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4">
+        <FadeIn className="text-center">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+            {SITE.name}
+          </h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            {SITE.tagline}
+          </p>
         </FadeIn>
 
-        <FadeIn className="delay-100">
-          <GeneratorPreview
-            isLoading={isLoading}
-            result={result}
-            generationTime={generationTime}
-            error={error}
-          />
-        </FadeIn>
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)]">
+          <FadeIn>
+            <Card className="h-full border-border/60 bg-card/70 shadow-lg shadow-black/10">
+              <CardContent className="px-5 py-5">
+                <GeneratorForm
+                  formData={formData}
+                  setFormData={setFormData}
+                  onSubmit={handleGenerate}
+                  isLoading={isLoading}
+                  isEditingPreviousPrompt={Boolean(regenerationInput)}
+                  prefillAnimated={prefillAnimated}
+                  changedFields={changedFields}
+                  onCancelEditing={handleCancelEditing}
+                />
+              </CardContent>
+            </Card>
+          </FadeIn>
+
+          <FadeIn className="delay-100">
+            <GeneratorPreview
+              isLoading={isLoading}
+              result={result}
+              generationTime={generationTime}
+              error={error}
+            />
+          </FadeIn>
+        </div>
       </div>
-    </Section>
+    </div>
   );
 }

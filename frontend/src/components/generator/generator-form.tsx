@@ -95,7 +95,7 @@ export function GeneratorForm({
   };
 
   return (
-    <form className="space-y-5" onSubmit={handleSubmit}>
+    <form className="space-y-4" onSubmit={handleSubmit}>
       {isEditingPreviousPrompt && (
         <div className="flex flex-col gap-3 rounded-lg border border-primary/30 bg-primary/10 p-3 sm:flex-row sm:items-center sm:justify-between">
           <Badge className="h-6 gap-1.5 rounded-md bg-primary/90 text-primary-foreground">
@@ -189,7 +189,7 @@ export function GeneratorForm({
           name="prompt"
           placeholder={GENERATOR_FIELDS.prompt.placeholder}
           rows={5}
-          className={cn("min-h-32 resize-none", getFieldClassName("prompt"))}
+          className={cn("min-h-28 resize-none", getFieldClassName("prompt"))}
           value={formData.prompt}
           onChange={handleInputChange}
           disabled={isLoading}
@@ -200,7 +200,7 @@ export function GeneratorForm({
         type="submit"
         size="lg"
         disabled={isLoading}
-        className="h-12 w-full text-sm font-medium transition-transform hover:scale-[1.01]"
+        className="h-11 w-full text-sm font-medium transition-transform hover:scale-[1.01]"
       >
         {isLoading ? (
           <>
