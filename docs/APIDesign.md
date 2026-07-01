@@ -1,79 +1,100 @@
 # API Design
 
-## POST /generate
+---
+
+# Authentication
+
+Authentication is handled on the frontend using Auth.js with Google OAuth.
+
+Authenticated users receive a session which is used for accessing protected features.
+
+---
+
+# POST /generate
 
 Generates a new AI image.
 
 ### Request
 
+```json
 {
-    genre,
-    environment,
-    style,
-    prompt
+    "genre": "",
+    "environment": "",
+    "style": "",
+    "inspiredBy": "",
+    "prompt": ""
 }
+```
 
 ### Response
 
+```json
 {
-    success,
-    imageUrl,
-    prompt,
-    generationId
+    "success": true,
+    "imageUrl": "",
+    "prompt": "",
+    "generationId": ""
 }
+```
 
 ---
 
-## GET /gallery
+# GET /gallery
 
-Returns all generated images.
+Returns only the authenticated user's generated images.
 
 ### Response
 
+```json
 [
     {
-        id,
-        imageUrl,
-        prompt,
-        createdAt
+        "id": "",
+        "imageUrl": "",
+        "prompt": "",
+        "createdAt": ""
     }
 ]
+```
 
 ---
 
-## POST /regenerate
+# POST /regenerate
 
-Uses a previous prompt to create another image.
+Creates another image using an existing prompt.
 
 ### Request
 
+```json
 {
-    generationId,
-    updatedPrompt
+    "generationId": "",
+    "updatedPrompt": ""
 }
+```
 
 ---
 
-## Error Responses
+# Error Responses
 
 400
 
 Invalid Prompt
 
----
+401
+
+Unauthorized
+
+403
+
+Forbidden
 
 500
 
 Image Generation Failed
 
----
+503
+
+AI Service Unavailable
 
 504
 
 Generation Timeout
-
----
-
-503
-
-Service Unavailable

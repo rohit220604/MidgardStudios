@@ -1,20 +1,30 @@
 # System Design
 
-## High Level Architecture
+---
+
+# High Level Architecture
 
 User
 
 ↓
 
-Frontend (Next.js)
+Next.js Frontend
 
 ↓
 
-Backend API (Express)
+Auth.js (Google OAuth)
 
 ↓
 
-Gemini Image API
+Express Backend
+
+↓
+
+Prompt Builder
+
+↓
+
+Pollinations AI
 
 ↓
 
@@ -30,88 +40,76 @@ Frontend Response
 
 ---
 
-## Request Journey
+# Request Journey
 
-1. User enters game details.
-2. Frontend validates input.
-3. Request is sent to backend.
-4. Backend builds the final AI prompt.
-5. Backend calls Gemini Image API.
-6. AI returns generated image.
-7. Backend uploads image to Cloudinary.
-8. Image URL and metadata are stored in PostgreSQL.
-9. Backend returns response.
-10. Frontend updates the gallery.
-
----
-
-## Why Backend?
-
-The AI API key should never be exposed to the browser.
-
-The backend acts as:
-
-- Security layer
-- Validation layer
-- Storage manager
-- Error handling layer
+1. User signs in with Google.
+2. User fills the generation form.
+3. Frontend validates input.
+4. Backend builds the optimized prompt.
+5. Backend requests image generation from Pollinations.
+6. Backend waits until the image becomes available.
+7. Image is downloaded.
+8. Image is uploaded to Cloudinary.
+9. Metadata is stored in PostgreSQL.
+10. Response is returned.
+11. Personal gallery updates.
 
 ---
 
-## Image Storage
+# Backend Responsibilities
+
+- Authentication verification
+- Prompt optimization
+- AI communication
+- Cloudinary upload
+- Database storage
+- Error handling
+
+---
+
+# Image Storage
 
 Images are uploaded to Cloudinary.
 
-The database stores only:
+Database stores
 
 - Prompt
 - Metadata
 - Cloudinary URL
-
-This keeps the database lightweight.
+- User ID
 
 ---
 
-## Gallery Flow
+# Gallery Flow
+
+Login
+
+↓
+
+Generate
+
+↓
+
+Cloudinary
+
+↓
 
 Database
 
 ↓
 
-Backend
+My Gallery
 
 ↓
 
-Frontend Gallery
-
-↓
-
-User selects image
-
-↓
-
-Prompt pre-filled
-
-↓
-
-Generate Again
+Regenerate
 
 ---
 
-## Concurrent Users
-
-Each request is processed independently.
-
-Images are uploaded separately.
-
-Database records are created independently using unique IDs.
-
----
-
-## Failure Handling
+# Failure Handling
 
 - Invalid prompt
 - AI timeout
-- Broken API response
+- Empty image
 - Cloudinary upload failure
-- Database write failure
+- Database failure

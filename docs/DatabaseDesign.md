@@ -1,20 +1,51 @@
 # Database Design
 
-## Generation Table
+---
+
+# User Table
 
 | Field | Type |
-|-------|------|
+|------|------|
 | id | String |
+| name | String |
+| email | String |
+| image | String |
+| provider | String |
+| createdAt | DateTime |
+
+---
+
+# Generation Table
+
+| Field | Type |
+|------|------|
+| id | String |
+| userId | String |
 | genre | String |
 | environment | String |
 | style | String |
+| inspiredBy | String |
 | prompt | String |
 | imageUrl | String |
 | createdAt | DateTime |
 
 ---
 
-## Storage Strategy
+# Relationships
+
+User
+
+1
+
+↓
+
+∞
+
+Generation
+
+---
+
+# Storage Strategy
 
 Images are stored in Cloudinary.
 
@@ -22,21 +53,20 @@ Only metadata is stored in PostgreSQL.
 
 ---
 
-## Benefits
+# Benefits
 
 - Small database size
 - Faster queries
-- Easy CDN delivery
+- CDN image delivery
 - Better scalability
+- User-specific galleries
 
 ---
 
-## Future Tables
-
-Users
+# Future Tables
 
 Favorites
 
 Collections
 
-Tags
+Prompt Templates

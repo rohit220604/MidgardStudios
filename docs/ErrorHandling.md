@@ -1,6 +1,8 @@
 # Error Handling
 
-## Invalid Prompt
+---
+
+# Invalid Prompt
 
 Condition
 
@@ -13,32 +15,32 @@ Action
 
 ---
 
-## API Timeout
+# AI Timeout
 
 Condition
 
-- AI takes too long
+- Pollinations takes too long
 
 Action
 
-- Display timeout message
-- Allow retry
+- Retry automatically
+- Show timeout notification
 
 ---
 
-## Invalid API Response
+# Empty AI Response
 
 Condition
 
-- No image returned
+- Image download returns empty bytes
 
 Action
 
-- Show failure notification
+- Retry polling
 
 ---
 
-## Cloudinary Failure
+# Cloudinary Failure
 
 Condition
 
@@ -51,7 +53,7 @@ Action
 
 ---
 
-## Database Failure
+# Database Failure
 
 Condition
 
@@ -59,13 +61,26 @@ Condition
 
 Action
 
-- Inform user
-- Log error
+- Show error
+- Log failure
 
 ---
 
-## Frontend
+# Authentication Failure
+
+Condition
+
+- User not logged in
+
+Action
+
+- Redirect to Login
+
+---
+
+# Frontend
 
 - Toast notifications
 - Retry button
 - Loading skeleton
+- Friendly error messages

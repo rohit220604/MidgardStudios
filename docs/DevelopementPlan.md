@@ -1,58 +1,86 @@
 # Development Plan
 
-## Phase 1
+---
 
-Project Setup
+# Phase 1
 
-- Initialize repository
-- Configure frontend
-- Configure backend
-- Setup Prisma
-- Connect Neon
+## Backend Foundation
+
+- Repository setup
+- Express
+- TypeScript
+- Prisma
+- Neon
+- Cloudinary
+- Pollinations AI
+
+✅ Completed
 
 ---
 
-## Phase 2
+# Phase 2
 
-Backend Development
+## Frontend Foundation
 
-- Create APIs
-- AI integration
-- Cloudinary integration
-- Database connection
+- Navbar
+- Footer
+- Landing Page
+- Generator UI
+- Responsive Layout
 
----
-
-## Phase 3
-
-Frontend Development
-
-- Landing page
-- Prompt form
-- Image viewer
-- Gallery
-- Loading states
-- Error states
+✅ Completed
 
 ---
 
-## Phase 4
+# Phase 3
 
-Testing
+## Authentication
 
-- Generate image
-- Refresh persistence
-- Gallery
-- Re-generation
-- Error handling
+- Google OAuth
+- Auth.js
+- Login Page
+- User Sessions
+- Protected Navigation
+
+⬜ In Progress
 
 ---
 
-## Phase 5
+# Phase 4
 
-Deployment
+## Core Features
 
-- Deploy frontend
-- Deploy backend
-- Configure environment variables
-- Verify production
+- Backend Integration
+- Image Preview
+- Personal Gallery
+- Prompt Regeneration
+
+⬜ Pending
+
+---
+
+# Phase 5
+
+## Premium UX
+
+- English / Japanese
+- Style Presets
+- Loading Skeletons
+- Animations
+- Toast Notifications
+
+⬜ Pending
+
+---
+
+# Phase 6
+
+## Deployment
+
+- Frontend → Vercel
+- Backend → Render
+- Database → Neon
+- Cloudinary Configuration
+- Production Testing
+
+⬜ Pending

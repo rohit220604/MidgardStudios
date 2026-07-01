@@ -2,77 +2,97 @@
 
 > AI-powered tools for game creators.
 
-## Project Overview
+---
 
-Midgard Studios is a web application that helps game developers generate concept art using AI.
+# Project Overview
 
-Instead of typing long prompts manually, users can provide structured inputs such as the game genre, environment, art style, and additional description. The application converts these inputs into an optimized prompt and generates concept artwork using an AI image generation model.
+Midgard Studios is a full-stack AI-powered web application that helps game developers, concept artists, and indie studios generate high-quality game concept art.
 
-Every generated image is stored in the user's gallery, allowing users to revisit previous generations, edit prompts, and regenerate improved versions.
+Instead of writing long AI prompts manually, users describe their idea through structured fields such as game genre, environment, art style, inspiration, and additional notes. The backend converts these inputs into an optimized AI prompt before generating artwork.
+
+Generated artwork is uploaded to Cloudinary and stored in a personal gallery, allowing authenticated users to revisit previous generations, regenerate artwork with updated prompts, and manage their creations.
+
+The application is designed as a modern SaaS product with authentication, persistent storage, responsive design, localization support, and a scalable backend architecture.
 
 ---
 
-## Target Users
+# Target Users
 
 - Indie Game Developers
 - Game Designers
 - Concept Artists
 - Students building game projects
 - Game Jam Participants
+- Small Game Studios
 
 ---
 
-## Core Features
+# Core Features
 
-- AI image generation
-- Prompt enhancement
-- Personal gallery
-- Persistent image storage
-- Prompt re-generation
-- Error handling
+- AI-powered concept art generation
+- Prompt optimization
+- Google Authentication
+- Personal user gallery
+- Persistent Cloudinary image storage
+- Prompt regeneration
+- English / Japanese localization
+- Inspired-by style presets
 - Responsive UI
+- Error handling and retry support
 
 ---
 
-## Tech Stack
+# Tech Stack
 
-### Frontend
-- Next.js
+## Frontend
+
+- Next.js 15
 - TypeScript
 - Tailwind CSS
 - Shadcn UI
+- Auth.js
+- Lucide React
 
-### Backend
+## Backend
+
 - Node.js
-- Express
+- Express.js
+- TypeScript
 - Prisma ORM
 
-### Database
+## Database
+
 - Neon PostgreSQL
 
-### Image Storage
+## Image Storage
+
 - Cloudinary
 
-### AI
-- Gemini Flash Image API
+## AI
+
+- Pollinations AI
 
 ---
 
-## Goals
+# Goals
 
-- Clean UI
-- Fast workflow
-- Reliable backend
-- Persistent gallery
-- Easy regeneration
+- Professional SaaS UI
+- Fast concept art workflow
+- Secure authentication
+- Reliable backend architecture
+- Persistent personal gallery
+- Easy prompt regeneration
+- Clean developer-friendly codebase
 
 ---
 
-## Future Improvements
+# Future Improvements
 
-- User authentication
-- Multiple galleries
-- AI prompt suggestions
-- Favorite images
-- Image download history
-- Public gallery
+- Multiple AI Providers
+- Team Workspaces
+- Public Gallery
+- Favorite Images
+- AI Prompt Suggestions
+- Download History
+- Collections
+- Sharing Generated Artwork
