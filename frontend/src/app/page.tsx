@@ -1,21 +1,15 @@
-import { PageWrapper } from "@/components/layout/page-wrapper";
-import { SITE } from "@/lib/constants";
+import { Features } from "@/components/features/features";
+import { GeneratorSection } from "@/components/generator/generator-section";
+import { Hero } from "@/components/hero/hero";
+import { HowItWorks } from "@/components/how-it-works/how-it-works";
 
 export default function HomePage() {
   return (
-    <PageWrapper>
-      <div className="mx-auto max-w-2xl space-y-4">
-        <p className="text-sm font-medium uppercase tracking-widest text-primary">
-          {SITE.name}
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-          Application Shell
-        </h1>
-        <p className="text-base leading-relaxed text-muted-foreground">
-          {SITE.tagline} This page is a placeholder while the core product
-          experience is built in upcoming stages.
-        </p>
-      </div>
-    </PageWrapper>
+    <>
+      <Hero />
+      <Features />
+      <HowItWorks />
+      <GeneratorSection />
+    </>
   );
 }
