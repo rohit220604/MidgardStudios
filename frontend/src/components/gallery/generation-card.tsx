@@ -2,7 +2,7 @@
 
 import { Calendar, Copy, Download, RefreshCw } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "@/i18n/navigation";
@@ -24,7 +24,7 @@ function copyPrompt(prompt: string) {
   });
 }
 
-export function GenerationCard({
+export const GenerationCard = memo(function GenerationCard({
   generation,
   variant = "gallery",
 }: GenerationCardProps) {
@@ -144,4 +144,4 @@ export function GenerationCard({
       )}
     </>
   );
-}
+});

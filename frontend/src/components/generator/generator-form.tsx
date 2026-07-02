@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2, RotateCcw, Wand2, X } from "lucide-react";
+import { memo, useCallback, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { INSPIRED_BY_OPTIONS } from "@/lib/landing";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
+import { PROMPT_MAX_LENGTH } from "@/lib/constants";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import type { GenerateInput, GenerateResponse } from "@/types/generation";
@@ -35,7 +37,7 @@ interface GeneratorFormProps {
   onCancelEditing?: () => void;
 }
 
-export function GeneratorForm({
+export const GeneratorForm = memo(function GeneratorForm({
   formData,
   setFormData,
   onSubmit,
@@ -48,6 +50,7 @@ export function GeneratorForm({
   const t = useTranslations("generator");
   const buttons = useTranslations("buttons");
   const { isAuthenticated, user } = useAuth();
+  const promptRef = useRef<HTMLTextAreaElement>(null);
   const getFieldClassName = (field: keyof GenerateInput) =>
     cn(
       "transition-all duration-300",
@@ -55,43 +58,62 @@ export function GeneratorForm({
       changedFields[field] && "ring-2 ring-primary/60 ring-offset-2 ring-offset-background",
     );
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      if (name === "prompt" && value.length > PROMPT_MAX_LENGTH) return;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    },
+    [setFormData],
+  );
 
-  const handleSelectChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, inspiredBy: value }));
-  };
+  const handleSelectChange = useCallback(
+    (value: string) => {
+      setFormData((prev) => ({ ...prev, inspiredBy: value }));
+    },
+    [setFormData],
+  );
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async (event: React.FormEvent) => {
+      event.preventDefault();
 
-    if (!isAuthenticated || !user?.email) {
-      toast.error(t("toasts.signInRequired"));
-      return;
-    }
+      if (!isAuthenticated || !user?.email) {
+        toast.error(t("toasts.signInRequired"));
+        return;
+      }
 
-    const { genre, environment, style, inspiredBy, prompt } = formData;
-    if (
-      !genre.trim() ||
-      !environment.trim() ||
-      !style.trim() ||
-      !inspiredBy.trim() ||
-      !prompt.trim()
-    ) {
-      toast.error(t("toasts.missingFields"));
-      return;
-    }
+      const { genre, environment, style, inspiredBy, prompt } = formData;
+      const missing: string[] = [];
+      if (!genre.trim()) missing.push("genre");
+      if (!environment.trim()) missing.push("environment");
+      if (!style.trim()) missing.push("style");
+      if (!inspiredBy.trim()) missing.push("inspiredBy");
+      if (!prompt.trim()) missing.push("prompt");
 
-    try {
-      await onSubmit(formData, user.email);
-    } catch {
-      // Error handles in hook with toast
-    }
-  };
+      if (missing.length > 0) {
+        // Focus the first missing field
+        if (missing.includes("genre")) {
+          document.getElementById("genre")?.focus();
+        } else if (missing.includes("environment")) {
+          document.getElementById("environment")?.focus();
+        } else if (missing.includes("style")) {
+          document.getElementById("style")?.focus();
+        } else if (missing.includes("prompt")) {
+          promptRef.current?.focus();
+        }
+        toast.error(t("toasts.missingFields"));
+        return;
+      }
+
+      try {
+        await onSubmit(formData, user.email);
+      } catch {
+        // Error handled in hook with toast
+      }
+    },
+    [formData, isAuthenticated, user?.email, onSubmit, t],
+  );
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
@@ -183,16 +205,30 @@ export function GeneratorForm({
       </FormField>
 
       <FormField id="prompt" label={t("fields.prompt.label")}>
-        <Textarea
-          id="prompt"
-          name="prompt"
-          placeholder={t("fields.prompt.placeholder")}
-          rows={5}
-          className={cn("min-h-28 resize-none", getFieldClassName("prompt"))}
-          value={formData.prompt}
-          onChange={handleInputChange}
-          disabled={isLoading}
-        />
+        <div className="relative">
+          <Textarea
+            ref={promptRef}
+            id="prompt"
+            name="prompt"
+            placeholder={t("fields.prompt.placeholder")}
+            rows={5}
+            className={cn(
+              "min-h-28 resize-none pb-7",
+              getFieldClassName("prompt"),
+            )}
+            value={formData.prompt}
+            onChange={handleInputChange}
+            disabled={isLoading}
+            aria-describedby="prompt-counter"
+            aria-label={t("fields.prompt.label")}
+          />
+          <span
+            id="prompt-counter"
+            className="absolute bottom-2 right-3 text-[10px] tabular-nums text-muted-foreground/50"
+          >
+            {formData.prompt.length}/{PROMPT_MAX_LENGTH}
+          </span>
+        </div>
       </FormField>
 
       <Button
@@ -215,4 +251,4 @@ export function GeneratorForm({
       </Button>
     </form>
   );
-}
+});

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -87,7 +87,7 @@ function LoadingIllustration() {
   );
 }
 
-export function GeneratorPreview({
+export const GeneratorPreview = memo(function GeneratorPreview({
   isLoading,
   result,
   generationTime,
@@ -265,4 +265,4 @@ export function GeneratorPreview({
       </CardContent>
     </Card>
   );
-}
+});
