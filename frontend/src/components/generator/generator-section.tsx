@@ -31,7 +31,7 @@ export function GeneratorSection() {
   const [regenerationInput, setRegenerationInput] = useState<RegenerationInput | null>(null);
   const [prefillAnimated, setPrefillAnimated] = useState(false);
 
-  const { generate, isLoading, result, generationTime, error } = useGenerate();
+  const { generate, retry, isLoading, result, generationTime, error } = useGenerate();
   const changedFields = useMemo(() => {
     if (!regenerationInput) {
       return {};
@@ -132,6 +132,7 @@ export function GeneratorSection() {
               result={result}
               generationTime={generationTime}
               error={error}
+              onRetry={retry}
             />
           </FadeIn>
         </div>

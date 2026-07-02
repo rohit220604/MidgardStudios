@@ -66,20 +66,24 @@
     "preview": {
       "label": "プレビュー",
       "empty": "生成されたアートワークがここに表示されます。",
-      "loadingTitle": "コンセプトアートを作成中...",
-      "loadingDescription": "Gemini のプロンプト最適化を実行し、Pollinations AI でアセットを生成しています。",
+      "loadingTitle": "コンセプトアートを生成中...",
+      "loadingDescription": "Gemini でプロンプトを最適化し、Pollinations AI でアセットを生成しています。",
+      "loadingTimeEstimate": "通常20～30秒かかります。",
+      "loadingRefreshWarning": "ページを更新しないでください。",
       "errorTitle": "生成に失敗しました",
       "errorDescription": "入力内容を確認して、もう一度お試しください。",
+      "retryButton": "再試行",
       "saved": "ギャラリーに保存済み",
       "optimizedPrompt": "最適化されたプロンプト",
       "loadingFooter": "アートワークを制作中...",
       "successFooter": "生成が完了しました。ギャラリーで確認できます。",
+      "errorFooter": "生成に失敗しました。再試行してください。",
       "emptyFooter": "生成画像はこのパネルに表示されます"
     },
     "toasts": {
       "signInRequired": "画像を生成するにはサインインしてください。",
       "missingFields": "生成する前にすべての入力欄を入力してください。",
-      "success": "AI画像を正常に生成しました。"
+      "success": "画像が正常に生成されました。"
     }
   },
   "gallery": {

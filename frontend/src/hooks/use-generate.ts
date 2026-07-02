@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useState, useRef } from "react";
 import axios from "axios";
 import { api } from "@/lib/api";
 import type { GenerateInput, GenerateResponse } from "@/types/generation";
@@ -13,11 +15,21 @@ export function useGenerate() {
   const [result, setResult] = useState<GenerateResponse["generation"] | null>(null);
   const [generationTime, setGenerationTime] = useState<number | null>(null);
 
+  // Track last input & email for retry
+  const lastInputRef = useRef<{ input: GenerateInput; userEmail: string } | null>(null);
+
   const generate = async (input: GenerateInput, userEmail: string) => {
+    // Guard against double submission — reject silently so form's try/catch handles it
+    if (isLoading) throw new Error("Already generating");
+
     setIsLoading(true);
     setError(null);
     setResult(null);
     setGenerationTime(null);
+
+    // Store for potential retry
+    lastInputRef.current = { input, userEmail };
+
     const startTime = performance.now();
 
     try {
@@ -42,15 +54,24 @@ export function useGenerate() {
             ? err.message
             : errors("generateFailed");
       setError(errMsg);
-      toast.error(errMsg);
+      toast.error(errMsg, {
+        duration: 5000,
+      });
       throw err;
     } finally {
       setIsLoading(false);
     }
   };
 
+  const retry = async () => {
+    const last = lastInputRef.current;
+    if (!last) return undefined;
+    return generate(last.input, last.userEmail);
+  };
+
   return {
     generate,
+    retry,
     isLoading,
     error,
     result,

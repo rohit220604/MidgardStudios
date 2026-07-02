@@ -66,20 +66,24 @@
     "preview": {
       "label": "Preview",
       "empty": "Your generated artwork will appear here.",
-      "loadingTitle": "Creating concept art...",
-      "loadingDescription": "Invoking Gemini prompt optimizer and generating your assets with Pollinations AI.",
+      "loadingTitle": "Generating Concept Art...",
+      "loadingDescription": "Optimizing your prompt with Gemini and generating assets via Pollinations AI.",
+      "loadingTimeEstimate": "This usually takes 20–30 seconds.",
+      "loadingRefreshWarning": "Please don't refresh the page.",
       "errorTitle": "Generation Failed",
       "errorDescription": "Please check your input values and try again.",
+      "retryButton": "Retry Generation",
       "saved": "Saved to Gallery",
       "optimizedPrompt": "Optimized Prompt",
       "loadingFooter": "Artistry in motion...",
       "successFooter": "Generation complete. View in your Gallery.",
+      "errorFooter": "Generation failed. Click retry to try again.",
       "emptyFooter": "Generated images will render in this panel"
     },
     "toasts": {
       "signInRequired": "Please sign in to generate images.",
       "missingFields": "Please fill in all inputs before generating.",
-      "success": "AI image generated successfully!"
+      "success": "Image generated successfully."
     }
   },
   "gallery": {
