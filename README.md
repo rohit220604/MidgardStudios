@@ -1,38 +1,82 @@
 # 🎮 Midgard Studios
 
-> AI-powered tools for game creators.
+> AI-powered game concept art generation platform for game developers, artists, and indie studios.
 
-Midgard Studios is a niche AI-powered concept art generation platform designed for game developers, artists, and indie studios. It transforms structured creative inputs into high-quality game concept art and provides a persistent personal gallery for managing generated assets.
+Midgard Studios transforms structured creative inputs into high-quality AI-generated game concept art. Built as a full-stack application, it provides a complete workflow from prompt generation to cloud storage, user authentication, and a persistent personal gallery.
 
 ---
 
-## ✨ Features
+# 🌐 Live Demo
+
+| Service | Link |
+|----------|------|
+| 🎨 Frontend | https://midgard-studios-two.vercel.app |
+| ⚙️ Backend API | https://midgardstudios.onrender.com |
+
+> **Note**
+>
+> The backend is hosted on Render's free tier. If the service has been inactive, the first request may take **30–60 seconds** while the server wakes up.
+
+---
+
+# 🚀 Quick Start
+
+1. Open the **Frontend** application.
+2. Sign in using **Google Authentication**.
+3. Enter your game concept.
+4. Generate AI artwork.
+5. View all creations in your personal gallery.
+6. Download or regenerate any previous artwork.
+7. Switch between **English 🇺🇸** and **Japanese 🇯🇵** at any time.
+
+---
+
+# ✨ Features
 
 - 🎨 AI-powered game concept art generation
+- 🎮 Structured game-focused prompt builder
 - 🔒 Google Authentication
-- 🖼️ Personal gallery for every user
-- 🔄 Re-generate existing concepts without starting over
-- ☁️ Cloudinary image storage
-- 🗄️ Persistent storage using Neon PostgreSQL
+- 🖼️ Personal user gallery
+- 🔄 Regenerate existing concepts
+- ☁️ Cloudinary image hosting
+- 🗄️ Neon PostgreSQL persistence
 - 🌐 English & Japanese localization
 - 📥 Download generated artwork
 - 📋 Copy prompt functionality
-- 📱 Responsive UI
-- ⚠️ Graceful error handling for API failures and timeouts
+- 📱 Fully responsive interface
+- ⚠️ Graceful error handling
+- 🚀 Modern full-stack architecture
 
 ---
 
-## 📸 Screenshots
+# 📸 Screenshots
 
-> Add screenshots after deployment.
+## 🏠 Home
 
-| Home | Gallery |
-|------|----------|
-| Screenshot | Screenshot |
+![Home](docs/screenshots/home.png)
 
 ---
 
-# 🏗️ Architecture
+## 🖼️ Gallery
+
+![Gallery](docs/screenshots/gallery.png)
+
+---
+
+## ℹ️ About
+
+![About](docs/screenshots/about.png)
+
+![About1](docs/screenshots/about1.png)
+
+---
+
+## 🌐 Japanese Localization
+
+![Japanese](docs/screenshots/japanese.png)
+---
+
+# 🏗️ System Architecture
 
 ```text
                 Next.js Frontend
@@ -73,57 +117,73 @@ Midgard Studios is a niche AI-powered concept art generation platform designed f
 - TypeScript
 - Tailwind CSS
 - Shadcn UI
-- next-intl
 - Auth.js
+- next-intl
+- React Icons
+
+---
 
 ## Backend
 
 - Node.js
-- Express
+- Express.js
 - TypeScript
 - Prisma ORM
+
+---
 
 ## Database
 
 - Neon PostgreSQL
 
+---
+
+## AI
+
+- Pollinations AI
+
+---
+
 ## Storage
 
 - Cloudinary
 
-## AI
-
-- Pollinations.ai
+---
 
 ## Authentication
 
-- Google OAuth (Auth.js)
+- Google OAuth
+- Auth.js
 
 ---
 
 # 📂 Project Structure
 
-```
+```text
 midgard-studios/
 
 ├── frontend/
 │   ├── app/
 │   ├── components/
 │   ├── hooks/
+│   ├── i18n/
 │   ├── lib/
 │   ├── messages/
-│   └── i18n/
+│   └── public/
 │
 ├── backend/
+│   ├── prisma/
 │   ├── src/
+│   │   ├── config/
 │   │   ├── controllers/
-│   │   ├── services/
-│   │   ├── routes/
 │   │   ├── middleware/
-│   │   ├── prisma/
-│   │   └── config/
+│   │   ├── repositories/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── types/
+│   │   └── utils/
 │   │
-│   └── prisma/
+│   └── generated/
 │
 └── docs/
 ```
@@ -132,7 +192,7 @@ midgard-studios/
 
 # 🔄 Request Flow
 
-```
+```text
 User
 
 ↓
@@ -157,15 +217,19 @@ Generated Image
 
 ↓
 
+Download Image
+
+↓
+
 Cloudinary Upload
 
 ↓
 
-Prisma
+Prisma ORM
 
 ↓
 
-Neon Database
+Neon PostgreSQL
 
 ↓
 
@@ -173,7 +237,7 @@ Frontend
 
 ↓
 
-Gallery
+Personal Gallery
 ```
 
 ---
@@ -188,38 +252,39 @@ The user provides:
 - Inspiration
 - Additional Prompt
 
-The backend combines these inputs into an optimized prompt and sends it to Pollinations AI.
+The backend constructs an optimized prompt before sending it to Pollinations AI.
 
-The generated image is then:
+Once the image is generated:
 
-1. Downloaded by the backend
-2. Uploaded to Cloudinary
-3. Stored in Neon PostgreSQL
-4. Returned to the frontend
-5. Added to the user's personal gallery
+1. The backend downloads the image.
+2. The image is uploaded to Cloudinary.
+3. Image metadata is stored in Neon PostgreSQL.
+4. The Cloudinary URL is returned to the frontend.
+5. The artwork appears in the user's personal gallery.
 
 ---
 
 # 🌍 Localization
 
-Midgard Studios supports:
+Midgard Studios currently supports:
 
 - 🇺🇸 English
 - 🇯🇵 Japanese
 
-The interface can be switched at runtime without affecting application state.
+Language switching happens instantly without affecting application state.
 
 ---
 
 # 🔒 Authentication
 
-Authentication is implemented using Google OAuth with Auth.js.
+Authentication is implemented using Google OAuth through Auth.js.
 
-Each authenticated user has:
+Every authenticated user receives:
 
 - Personal gallery
-- Isolated generations
-- Persistent history
+- Private generation history
+- Persistent cloud storage
+- Secure session management
 
 ---
 
@@ -227,14 +292,15 @@ Each authenticated user has:
 
 The application gracefully handles:
 
-- AI generation timeout
+- AI generation failures
+- Pollinations timeout
 - Network failures
-- Invalid AI responses
 - Cloudinary upload failures
 - Database errors
 - Missing authentication
+- Invalid API responses
 
-Meaningful loading and error states are displayed to the user.
+Meaningful loading indicators and user-friendly error messages are displayed throughout the application.
 
 ---
 
@@ -245,7 +311,11 @@ Meaningful loading and error states are displayed to the user.
 ```env
 PORT=
 
+NODE_ENV=
+
 DATABASE_URL=
+
+GOOGLE_API_KEY=
 
 CLOUDINARY_CLOUD_NAME=
 
@@ -253,8 +323,10 @@ CLOUDINARY_API_KEY=
 
 CLOUDINARY_API_SECRET=
 
-GOOGLE_API_KEY=
+FRONTEND_URL=
 ```
+
+---
 
 ## Frontend
 
@@ -272,10 +344,10 @@ NEXT_PUBLIC_API_URL=
 
 # 💻 Running Locally
 
-## Clone
+## Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/rohit220604/MidgardStudios.git
 ```
 
 ---
@@ -308,31 +380,38 @@ npm run dev
 
 ---
 
-Visit
+Visit:
 
-```
+```text
+Frontend:
 http://localhost:3000
+
+Backend:
+http://localhost:3001
 ```
 
 ---
 
-# 🎮 Design Decisions
+# 🎨 Design Decisions
 
 Instead of building a generic AI image generator, Midgard Studios focuses specifically on **game concept art**.
 
-Structured inputs such as genre, environment, and artistic style help users create consistent concepts while reducing prompt engineering complexity.
+Structured prompt inputs guide users through the creative process while improving prompt consistency and reducing prompt engineering effort.
 
-Authentication ensures every user has a dedicated gallery.
+Cloudinary stores generated artwork, while Neon PostgreSQL stores only metadata, allowing the system to scale efficiently.
 
-Cloudinary was chosen to offload image storage from the backend, while Neon PostgreSQL provides persistent metadata storage.
+Authentication ensures every user has a dedicated and private gallery.
+
+All AI communication happens through the backend to keep integrations secure and prevent exposing implementation details to the client.
 
 ---
 
 # ⚠️ Known Limitations
 
-- Pollinations AI generation time may vary depending on server load.
+- Pollinations AI generation time varies depending on server load.
+- AI-generated outputs are non-deterministic.
 - Image quality depends on prompt specificity.
-- AI-generated outputs are non-deterministic and may differ for identical prompts.
+- First backend request may be slower due to Render free-tier cold starts.
 
 ---
 
@@ -340,11 +419,13 @@ Cloudinary was chosen to offload image storage from the backend, while Neon Post
 
 - Prompt version history
 - AI prompt enhancement
-- Team workspaces
-- Favorite artworks
+- Multiple AI providers
+- Public artwork sharing
 - Collections
-- Public sharing links
-- Additional image generation providers
+- Favorites
+- Team workspaces
+- Higher-resolution image generation
+- Real-time generation progress
 
 ---
 
