@@ -110,7 +110,7 @@ export const GeneratorPreview = memo(function GeneratorPreview({
 
   return (
     <Card className="h-full overflow-hidden border-border/60 bg-card/50 shadow-xl shadow-black/10">
-      <CardContent className="flex h-full min-h-[28rem] flex-col p-3 md:p-4 lg:min-h-[30rem]">
+      <CardContent className="flex h-full min-h-[650px] flex-col p-3 md:p-4">
         <div className="relative flex flex-1 flex-col overflow-hidden rounded-xl border border-border/60 bg-gradient-to-b from-background/80 via-card/40 to-background/60">
           <div
             aria-hidden

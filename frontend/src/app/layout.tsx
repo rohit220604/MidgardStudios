@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 
 import { SessionProvider } from "@/components/auth/session-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -8,7 +8,12 @@ import { SITE } from "@/lib/constants";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
-  variable: "--font-sans",
+  variable: "--font-heading",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-body",
   subsets: ["latin"],
 });
 
@@ -43,11 +48,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${spaceGrotesk.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`dark ${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
+    >
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
+      <body className="flex min-h-full flex-col bg-background font-body text-foreground">
         <SessionProvider>
           {children}
           <Toaster />

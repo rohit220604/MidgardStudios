@@ -96,22 +96,25 @@ export function GeneratorSection() {
     <div
       id="generator"
       ref={sectionRef}
-      className="flex flex-1 items-center bg-background px-4 py-4 sm:px-6 lg:px-8"
+      className="flex flex-1 items-start bg-background"
     >
-      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4">
-        <FadeIn className="text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+      <div className="mx-auto flex w-full max-w-[1400px] flex-col px-6 lg:px-8 pt-[48px] pb-16">
+        {/* Header — centered over the full workspace */}
+        <FadeIn className="text-center mb-8">
+          <h1 className="text-3xl font-heading font-semibold tracking-tight text-foreground">
             {brand("name")}
           </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">
+          <p className="mt-2 text-sm text-muted-foreground">
             {brand("tagline")}
           </p>
         </FadeIn>
 
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)]">
-          <FadeIn>
+        {/* Workspace — form + preview */}
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+          {/* Generator form — fixed-width card */}
+          <FadeIn className="w-full lg:w-[440px] shrink-0">
             <Card className="h-full border-border/60 bg-card/70 shadow-lg shadow-black/10">
-              <CardContent className="px-5 py-5">
+              <CardContent className="px-5 py-6">
                 <GeneratorForm
                   formData={formData}
                   setFormData={setFormData}
@@ -126,7 +129,8 @@ export function GeneratorSection() {
             </Card>
           </FadeIn>
 
-          <FadeIn className="delay-100">
+          {/* Preview — fills remaining space */}
+          <FadeIn className="flex-1 min-w-0 delay-100">
             <GeneratorPreview
               isLoading={isLoading}
               result={result}
