@@ -51,7 +51,7 @@ The application is designed as a modern SaaS product with authentication, persis
 - Tailwind CSS
 - Shadcn UI
 - Auth.js
-- Lucide React
+- React Icons
 
 ## Backend
 
@@ -96,3 +96,4 @@ The application is designed as a modern SaaS product with authentication, persis
 - Download History
 - Collections
 - Sharing Generated Artwork
+- More authentication options
