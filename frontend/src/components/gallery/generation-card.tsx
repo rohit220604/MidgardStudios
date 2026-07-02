@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "@/i18n/navigation";
 import { saveRegenerationInput, toRegenerationInput } from "@/lib/regeneration";
+import { downloadImage } from "@/lib/download";
 import { toast } from "sonner";
 import type { Generation } from "@/types/generation";
 
@@ -15,17 +16,6 @@ import { ImageModal } from "./image-modal";
 interface GenerationCardProps {
   generation: Generation;
   variant?: "gallery" | "compact";
-}
-
-function downloadImage(imageUrl: string, prompt: string) {
-  const link = document.createElement("a");
-  link.href = imageUrl;
-  link.download = prompt
-    ? `${prompt.slice(0, 40).replace(/[^a-zA-Z0-9 ]/g, "").trim()}.png`
-    : "concept-art.png";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 }
 
 function copyPrompt(prompt: string) {
@@ -104,9 +94,14 @@ export function GenerationCard({
           <Button
             variant="outline"
             size="sm"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.stopPropagation();
-              downloadImage(generation.imageUrl, generation.prompt);
+              try {
+                await downloadImage(generation.imageUrl, generation.id);
+                toast.success("Image downloaded successfully.");
+              } catch {
+                toast.error("Download failed. Please try again.");
+              }
             }}
             className="h-8 flex-1 gap-1.5 border-border/60 text-foreground transition-all duration-200 hover:bg-muted"
           >

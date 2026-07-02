@@ -4,13 +4,14 @@ import { Calendar, Copy, Download, ImageIcon, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import type { Generation } from "@/types/generation";
 
 interface ImageModalProps {
   generation: Generation;
   onClose: () => void;
   onCopyPrompt: (prompt: string) => void;
-  onDownload: (imageUrl: string, prompt: string) => void;
+  onDownload: (imageUrl: string, generationId: string) => Promise<void>;
 }
 
 export function ImageModal({
@@ -118,7 +119,14 @@ export function ImageModal({
               variant="default"
               size="sm"
               className="gap-1.5"
-              onClick={() => onDownload(generation.imageUrl, generation.prompt)}
+          onClick={async () => {
+            try {
+              await onDownload(generation.imageUrl, generation.id);
+              toast.success("Image downloaded successfully.");
+            } catch {
+              toast.error("Download failed. Please try again.");
+            }
+          }}
             >
               <Download className="size-3.5" />
               {t("downloadButton")}
