@@ -1,15 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { useAuth } from "@/hooks/use-auth";
 import { useGallery } from "@/hooks/use-gallery";
 import { Button } from "@/components/ui/button";
 import { GenerationCard } from "@/components/gallery/generation-card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LogIn, Image as ImageIcon, RotateCw } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { LogIn, Image as ImageIcon, RotateCw, Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-export default function MyGalleryPage() {
+export default function GalleryPage() {
+  const t = useTranslations("gallery");
+  const buttons = useTranslations("buttons");
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const { generations, isLoading: galleryLoading, refetch } = useGallery(user?.email || undefined);
 
@@ -20,10 +23,10 @@ export default function MyGalleryPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-border/60 pb-5 gap-4">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              My Gallery
+              {t("title")}
             </h1>
             <p className="mt-2 text-base text-muted-foreground">
-              A personalized space containing your AI-generated gaming assets and creations.
+              {t("subtitle")}
             </p>
           </div>
           {isAuthenticated && (
@@ -35,12 +38,12 @@ export default function MyGalleryPage() {
               className="self-start sm:self-auto gap-2 border-border bg-input/10 hover:bg-input/20 transition-all duration-200"
             >
               <RotateCw className={`h-4.5 w-4.5 ${galleryLoading ? "animate-spin" : ""}`} />
-              Refresh
+              {buttons("refresh")}
             </Button>
           )}
         </div>
 
-        {/* Content Loading State */}
+        {/* Content States */}
         {authLoading ? (
           <div className="flex justify-center items-center py-20">
             <RotateCw className="h-8 w-8 text-primary animate-spin" />
@@ -52,14 +55,14 @@ export default function MyGalleryPage() {
               <LogIn className="h-6 w-6" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-lg font-medium text-foreground">Sign in required</h3>
+              <h3 className="text-lg font-medium text-foreground">{t("signInRequired")}</h3>
               <p className="text-sm text-muted-foreground">
-                You must be logged in to view your personalized asset generation gallery.
+                {t("signInDescription")}
               </p>
             </div>
-            <Link href="/login" passHref legacyBehavior>
+            <Link href="/login">
               <Button variant="default" className="w-full">
-                Sign In with Google
+                {buttons("signInWithGoogle")}
               </Button>
             </Link>
           </div>
@@ -69,7 +72,11 @@ export default function MyGalleryPage() {
             {[...Array(6)].map((_, i) => (
               <div key={i} className="space-y-4">
                 <Skeleton className="aspect-[4/3] w-full rounded-2xl bg-muted/60 animate-pulse" />
-                <div className="space-y-2">
+                <div className="space-y-3">
+                  <div className="flex gap-2">
+                    <Skeleton className="h-4 w-16 bg-muted/60 animate-pulse" />
+                    <Skeleton className="h-4 w-20 bg-muted/60 animate-pulse" />
+                  </div>
                   <Skeleton className="h-4 w-2/3 bg-muted/60 animate-pulse" />
                   <Skeleton className="h-3 w-1/3 bg-muted/60 animate-pulse" />
                 </div>
@@ -77,18 +84,21 @@ export default function MyGalleryPage() {
             ))}
           </div>
         ) : generations.length === 0 ? (
-          // Empty State
-          <div className="rounded-2xl border border-dashed border-border/80 bg-card/25 p-16 text-center backdrop-blur-sm shadow-inner">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 mb-4 shadow-sm">
-              <ImageIcon className="h-6 w-6" />
+          // Empty State Layout
+          <div className="rounded-2xl border border-dashed border-border/80 bg-card/25 p-16 text-center backdrop-blur-sm shadow-inner max-w-2xl mx-auto mt-6">
+            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-primary border border-primary/20 mb-6 shadow-sm">
+              <ImageIcon className="h-12 w-12 text-primary/80 animate-pulse" />
             </div>
-            <h3 className="text-lg font-medium text-foreground">No assets generated yet</h3>
-            <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto">
-              Get started by returning to the generator home page and creating your first custom studio asset.
+            <h3 className="text-xl font-semibold text-foreground tracking-tight">{t("emptyTitle")}</h3>
+            <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
+              {t("emptyDescription")}
             </p>
-            <div className="mt-6">
-              <Link href="/#generator" passHref legacyBehavior>
-                <Button variant="default">Go to Generator</Button>
+            <div className="mt-8">
+              <Link href="/#generator">
+                <Button variant="default" className="px-6 gap-2">
+                  <Sparkles className="h-4.5 w-4.5" />
+                  {buttons("generateArtwork")}
+                </Button>
               </Link>
             </div>
           </div>
@@ -96,7 +106,7 @@ export default function MyGalleryPage() {
           // Gallery Grid View
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
             {generations.map((gen) => (
-              <GenerationCard key={gen.id} generation={gen} variant="compact" />
+              <GenerationCard key={gen.id} generation={gen} />
             ))}
           </div>
         )}

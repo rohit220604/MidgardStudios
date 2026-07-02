@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FadeIn } from "@/components/layout/fade-in";
 import { Card, CardContent } from "@/components/ui/card";
-import { GENERATOR } from "@/lib/landing";
 import {
   clearRegenerationInput,
   markGalleryNeedsRefresh,
@@ -11,7 +10,7 @@ import {
   type RegenerationInput,
 } from "@/lib/regeneration";
 import { useGenerate } from "@/hooks/use-generate";
-import { SITE } from "@/lib/constants";
+import { useTranslations } from "next-intl";
 import type { GenerateInput } from "@/types/generation";
 
 import { GeneratorForm } from "./generator-form";
@@ -26,6 +25,7 @@ const EMPTY_FORM_DATA: GenerateInput = {
 };
 
 export function GeneratorSection() {
+  const brand = useTranslations("brand");
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [formData, setFormData] = useState<GenerateInput>(EMPTY_FORM_DATA);
   const [regenerationInput, setRegenerationInput] = useState<RegenerationInput | null>(null);
@@ -94,17 +94,17 @@ export function GeneratorSection() {
 
   return (
     <div
-      id={GENERATOR.id}
+      id="generator"
       ref={sectionRef}
       className="flex flex-1 items-center bg-background px-4 py-4 sm:px-6 lg:px-8"
     >
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4">
         <FadeIn className="text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            {SITE.name}
+            {brand("name")}
           </h1>
           <p className="mt-1.5 text-sm text-muted-foreground">
-            {SITE.tagline}
+            {brand("tagline")}
           </p>
         </FadeIn>
 

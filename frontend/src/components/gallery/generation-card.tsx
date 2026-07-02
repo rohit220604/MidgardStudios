@@ -1,9 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Calendar, RefreshCw } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useRouter } from "@/i18n/navigation";
 import { saveRegenerationInput, toRegenerationInput } from "@/lib/regeneration";
 import type { Generation } from "@/types/generation";
 
@@ -16,7 +17,10 @@ export function GenerationCard({
   generation,
   variant = "gallery",
 }: GenerationCardProps) {
+  const t = useTranslations("buttons");
+  const locale = useLocale();
   const router = useRouter();
+  const createdAt = new Date(generation.createdAt).toLocaleDateString(locale);
 
   const handleRegenerate = () => {
     saveRegenerationInput(toRegenerationInput(generation));
@@ -47,7 +51,7 @@ export function GenerationCard({
           <div className="flex items-center justify-between border-t border-border/40 pt-3 text-xs text-muted-foreground">
             <span className="flex items-center gap-1.5 font-medium">
               <Calendar className="h-3.5 w-3.5 text-primary/70" />
-              {new Date(generation.createdAt).toLocaleDateString()}
+                        {createdAt}
             </span>
 
             <Button
@@ -57,7 +61,7 @@ export function GenerationCard({
               className="h-7 gap-1 border-border/60 px-2.5 text-foreground transition-all duration-200 hover:bg-muted"
             >
               <RefreshCw className="h-3 w-3" />
-              Regenerate
+              {t("regenerate")}
             </Button>
           </div>
         </CardContent>
@@ -92,7 +96,7 @@ export function GenerationCard({
             </span>
             <span className="flex items-center gap-1.5 font-medium">
               <Calendar className="h-3.5 w-3.5 text-primary/60" />
-              {new Date(generation.createdAt).toLocaleDateString()}
+              {createdAt}
             </span>
           </div>
 
@@ -109,7 +113,7 @@ export function GenerationCard({
             className="h-8 w-full gap-1.5 border-border/60 text-foreground transition-all duration-200 hover:bg-muted"
           >
             <RefreshCw className="h-3.5 w-3.5" />
-            Regenerate
+            {t("regenerate")}
           </Button>
         </div>
       </CardContent>

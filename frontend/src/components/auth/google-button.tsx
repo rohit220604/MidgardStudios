@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -10,6 +11,8 @@ interface GoogleButtonProps {
 }
 
 export function GoogleButton({ callbackUrl = "/", className }: GoogleButtonProps) {
+  const t = useTranslations("buttons");
+  const auth = useTranslations("auth");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
@@ -17,7 +20,7 @@ export function GoogleButton({ callbackUrl = "/", className }: GoogleButtonProps
     try {
       await signIn("google", { callbackUrl });
     } catch (error) {
-      console.error("Sign in failed:", error);
+      console.error(auth("signInFailed"), error);
     } finally {
       setIsLoading(false);
     }
@@ -53,7 +56,7 @@ export function GoogleButton({ callbackUrl = "/", className }: GoogleButtonProps
           />
         </svg>
       )}
-      {isLoading ? "Redirecting..." : "Continue with Google"}
+      {isLoading ? t("redirecting") : t("continueWithGoogle")}
     </Button>
   );
 }

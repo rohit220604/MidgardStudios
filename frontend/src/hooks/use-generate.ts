@@ -2,9 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { api } from "@/lib/api";
 import type { GenerateInput, GenerateResponse } from "@/types/generation";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 export function useGenerate() {
+  const t = useTranslations("generator.toasts");
+  const errors = useTranslations("errors");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<GenerateResponse["generation"] | null>(null);
@@ -29,7 +32,7 @@ export function useGenerate() {
 
       setResult(response.data.generation);
       setGenerationTime(timeElapsed);
-      toast.success("AI image generated successfully!");
+      toast.success(t("success"));
       return response.data.generation;
     } catch (err: unknown) {
       const errMsg =
@@ -37,7 +40,7 @@ export function useGenerate() {
           ? err.response.data.message
           : err instanceof Error
             ? err.message
-            : "Failed to generate image";
+            : errors("generateFailed");
       setError(errMsg);
       toast.error(errMsg);
       throw err;

@@ -1,0 +1,159 @@
+{
+  "brand": {
+    "name": "Midgard Studios",
+    "tagline": "ゲームクリエイターのためのAI搭載ツール。"
+  },
+  "language": {
+    "label": "言語",
+    "english": "English",
+    "japanese": "日本語"
+  },
+  "navigation": {
+    "home": "ホーム",
+    "gallery": "ギャラリー",
+    "about": "概要",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる"
+  },
+  "buttons": {
+    "generate": "生成",
+    "refresh": "更新",
+    "regenerate": "再生成",
+    "signIn": "サインイン",
+    "signInWithGoogle": "Googleでサインイン",
+    "continueWithGoogle": "Googleで続行",
+    "redirecting": "リダイレクト中...",
+    "generateArtwork": "アートワークを生成",
+    "goToGenerator": "ジェネレーターへ",
+    "cancelEditing": "編集をキャンセル"
+  },
+  "generator": {
+    "title": "コンセプトアートジェネレーター",
+    "subtitle": "クリエイティブの方向性を設定し、制作に使えるコンセプトアートを生成します。",
+    "editingPreviousPrompt": "以前のプロンプトを編集中",
+    "fields": {
+      "genre": {
+        "label": "ゲームジャンル",
+        "placeholder": "例: ファンタジーRPG、SFホラー"
+      },
+      "environment": {
+        "label": "環境",
+        "placeholder": "例: 古代の森、ネオンの巨大都市"
+      },
+      "style": {
+        "label": "アートスタイル",
+        "placeholder": "例: コンセプトアート、絵画調、セルシェーディング"
+      },
+      "inspiredBy": {
+        "label": "インスピレーション",
+        "placeholder": "インスピレーションを選択"
+      },
+      "prompt": {
+        "label": "追加プロンプト",
+        "placeholder": "主要な被写体、ムード、ライティング、構図の詳細を入力..."
+      }
+    },
+    "presets": {
+      "Custom": "カスタム",
+      "Dark Souls": "ダークソウル",
+      "Elden Ring": "エルデンリング",
+      "Studio Ghibli": "スタジオジブリ",
+      "Cyberpunk 2077": "サイバーパンク2077",
+      "Zelda": "ゼルダ",
+      "Norse Mythology": "北欧神話",
+      "JRPG": "JRPG"
+    },
+    "preview": {
+      "label": "プレビュー",
+      "empty": "生成されたアートワークがここに表示されます。",
+      "loadingTitle": "コンセプトアートを作成中...",
+      "loadingDescription": "Gemini のプロンプト最適化を実行し、Pollinations AI でアセットを生成しています。",
+      "errorTitle": "生成に失敗しました",
+      "errorDescription": "入力内容を確認して、もう一度お試しください。",
+      "saved": "ギャラリーに保存済み",
+      "optimizedPrompt": "最適化されたプロンプト",
+      "loadingFooter": "アートワークを制作中...",
+      "successFooter": "生成が完了しました。ギャラリーで確認できます。",
+      "emptyFooter": "生成画像はこのパネルに表示されます"
+    },
+    "toasts": {
+      "signInRequired": "画像を生成するにはサインインしてください。",
+      "missingFields": "生成する前にすべての入力欄を入力してください。",
+      "success": "AI画像を正常に生成しました。"
+    }
+  },
+  "gallery": {
+    "title": "ギャラリー",
+    "subtitle": "AIで生成したアセットとコンセプトのコレクションを確認できます。",
+    "myTitle": "マイギャラリー",
+    "mySubtitle": "あなたのAI生成ゲームアセットと作品をまとめたパーソナルスペースです。",
+    "signInRequired": "サインインが必要です",
+    "signInDescription": "生成したコンセプトアートを表示・管理するには、Googleでログインしてください。",
+    "mySignInDescription": "パーソナルなアセット生成ギャラリーを表示するにはログインが必要です。",
+    "emptyTitle": "コンセプトアートはまだありません",
+    "emptyDescription": "最初のアートワークを生成して、自分だけのギャラリーを作りましょう。",
+    "myEmptyTitle": "生成されたアセットはまだありません",
+    "myEmptyDescription": "ジェネレーターのホームページに戻って、最初のカスタムスタジオアセットを作成しましょう。",
+    "errors": {
+      "fetchFailed": "ギャラリーの取得に失敗しました"
+    }
+  },
+  "about": {
+    "metadataTitle": "概要",
+    "heroTitle": "Midgard Studiosについて",
+    "heroImageAlt": "ファンタジー世界のコンセプトアート",
+    "intro1BeforeBrand": "",
+    "intro1AfterBrand": " は、ゲームクリエイターのために構築されたAI搭載のコンセプトアートプラットフォームです。開発者、デザイナー、アーティストが、構造化されたアイデアを数秒で視覚的に魅力のあるコンセプトアートへ変換できるよう支援します。",
+    "intro2": "複雑なプロンプトを手作業で書く代わりに、クリエイターはゲームジャンル、環境、アートスタイル、インスピレーション、追加の詳細といった直感的な入力で世界観を説明するだけです。Midgard Studiosはそれらのアイデアを最適化されたAIプロンプトへ洗練し、コンセプト制作をより速く、より一貫性があり、反復しやすいものにします。",
+    "whyTitle": "なぜ「Midgard」なのか？",
+    "why1BeforeBrand": "「",
+    "why1AfterBrand": "」という名前は北欧神話に由来し、人間の領域を表します。それは物語、探索、創造性、冒険に満ちた世界です。",
+    "why2BeforeBrand": "Midgardが数え切れない旅と伝説をつなぐように、",
+    "why2AfterBrand": " は、AIの力によってアイデアが没入感のあるゲーム世界へ進化するクリエイティブスペースとして設計されています。",
+    "featuresTitle": "主な機能",
+    "featuresSubtitle": "ゲームのコンセプトアートをすばやく作成し、洗練し、整理するために必要なものがそろっています。",
+    "features": {
+      "aiConcept": {
+        "title": "AIコンセプトアート生成",
+        "description": "構造化されたアイデアを、AI搭載のプロンプト生成によって高品質なゲームコンセプトアートへ変換します。"
+      },
+      "personalGallery": {
+        "title": "パーソナルギャラリー",
+        "description": "生成されたすべてのアートワークは安全に保存され、いつでも見返し、整理し、ゲーム世界の構築を続けられます。"
+      },
+      "promptRegeneration": {
+        "title": "プロンプト再生成",
+        "description": "最初からやり直すのではなく、既存のプロンプトを編集して以前のコンセプトを反復できます。"
+      },
+      "builtForCreators": {
+        "title": "ゲームクリエイター向けに設計",
+        "description": "ゲーム開発者、アーティスト、インディースタジオのために、構造化されたクリエイティブワークフローを備えて設計されています。"
+      }
+    }
+  },
+  "auth": {
+    "signInTitle": "サインイン",
+    "signInDescription": "Midgard Studiosアカウントにサインインします。",
+    "backHome": "ホームに戻る",
+    "loginSubtitle": "サインインしてアセット生成とギャラリーにアクセス",
+    "secureNotice": "許可されたアクセスのみ。続行すると利用規約に同意したものとみなされます。",
+    "openUserMenu": "ユーザーメニューを開く",
+    "userActions": "ユーザー操作",
+    "fallbackName": "Midgard Creator",
+    "myGallery": "マイギャラリー",
+    "logout": "ログアウト",
+    "avatarAlt": "ユーザーアバター",
+    "signInFailed": "サインインに失敗しました:"
+  },
+  "footer": {
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "メール",
+    "madeWith": "心を込めて制作",
+    "by": "制作者",
+    "author": "ロヒット・ジャリミンチ"
+  },
+  "errors": {
+    "generateFailed": "画像の生成に失敗しました"
+  }
+}

@@ -12,13 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  GENERATOR,
-  GENERATOR_FIELDS,
-  INSPIRED_BY_OPTIONS,
-} from "@/lib/landing";
+import { INSPIRED_BY_OPTIONS } from "@/lib/landing";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import type { GenerateInput, GenerateResponse } from "@/types/generation";
 
@@ -48,6 +45,8 @@ export function GeneratorForm({
   changedFields = {},
   onCancelEditing,
 }: GeneratorFormProps) {
+  const t = useTranslations("generator");
+  const buttons = useTranslations("buttons");
   const { isAuthenticated, user } = useAuth();
   const getFieldClassName = (field: keyof GenerateInput) =>
     cn(
@@ -71,7 +70,7 @@ export function GeneratorForm({
     event.preventDefault();
 
     if (!isAuthenticated || !user?.email) {
-      toast.error("Please sign in to generate images.");
+      toast.error(t("toasts.signInRequired"));
       return;
     }
 
@@ -83,7 +82,7 @@ export function GeneratorForm({
       !inspiredBy.trim() ||
       !prompt.trim()
     ) {
-      toast.error("Please fill in all inputs before generating.");
+      toast.error(t("toasts.missingFields"));
       return;
     }
 
@@ -100,7 +99,7 @@ export function GeneratorForm({
         <div className="flex flex-col gap-3 rounded-lg border border-primary/30 bg-primary/10 p-3 sm:flex-row sm:items-center sm:justify-between">
           <Badge className="h-6 gap-1.5 rounded-md bg-primary/90 text-primary-foreground">
             <RotateCcw className="h-3.5 w-3.5" />
-            Editing Previous Prompt
+            {t("editingPreviousPrompt")}
           </Badge>
           <Button
             type="button"
@@ -111,16 +110,16 @@ export function GeneratorForm({
             className="h-8 border-primary/30 bg-background/40"
           >
             <X className="h-3.5 w-3.5" />
-            Cancel Editing
+            {buttons("cancelEditing")}
           </Button>
         </div>
       )}
 
-      <FormField id={GENERATOR_FIELDS.genre.id} label={GENERATOR_FIELDS.genre.label}>
+      <FormField id="genre" label={t("fields.genre.label")}>
         <Input
-          id={GENERATOR_FIELDS.genre.id}
+          id="genre"
           name="genre"
-          placeholder={GENERATOR_FIELDS.genre.placeholder}
+          placeholder={t("fields.genre.placeholder")}
           autoComplete="off"
           value={formData.genre}
           onChange={handleInputChange}
@@ -130,13 +129,13 @@ export function GeneratorForm({
       </FormField>
 
       <FormField
-        id={GENERATOR_FIELDS.environment.id}
-        label={GENERATOR_FIELDS.environment.label}
+        id="environment"
+        label={t("fields.environment.label")}
       >
         <Input
-          id={GENERATOR_FIELDS.environment.id}
+          id="environment"
           name="environment"
-          placeholder={GENERATOR_FIELDS.environment.placeholder}
+          placeholder={t("fields.environment.placeholder")}
           autoComplete="off"
           value={formData.environment}
           onChange={handleInputChange}
@@ -145,11 +144,11 @@ export function GeneratorForm({
         />
       </FormField>
 
-      <FormField id={GENERATOR_FIELDS.style.id} label={GENERATOR_FIELDS.style.label}>
+      <FormField id="style" label={t("fields.style.label")}>
         <Input
-          id={GENERATOR_FIELDS.style.id}
+          id="style"
           name="style"
-          placeholder={GENERATOR_FIELDS.style.placeholder}
+          placeholder={t("fields.style.placeholder")}
           autoComplete="off"
           value={formData.style}
           onChange={handleInputChange}
@@ -159,8 +158,8 @@ export function GeneratorForm({
       </FormField>
 
       <FormField
-        id={GENERATOR_FIELDS.inspiredBy.id}
-        label={GENERATOR_FIELDS.inspiredBy.label}
+        id="inspired-by"
+        label={t("fields.inspiredBy.label")}
       >
         <Select
           value={formData.inspiredBy}
@@ -168,26 +167,26 @@ export function GeneratorForm({
           disabled={isLoading}
         >
           <SelectTrigger
-            id={GENERATOR_FIELDS.inspiredBy.id}
+            id="inspired-by"
             className={cn("w-full", getFieldClassName("inspiredBy"))}
           >
-            <SelectValue placeholder={GENERATOR_FIELDS.inspiredBy.placeholder} />
+            <SelectValue placeholder={t("fields.inspiredBy.placeholder")} />
           </SelectTrigger>
           <SelectContent>
             {INSPIRED_BY_OPTIONS.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                {t(`presets.${option}`)}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
       </FormField>
 
-      <FormField id={GENERATOR_FIELDS.prompt.id} label={GENERATOR_FIELDS.prompt.label}>
+      <FormField id="prompt" label={t("fields.prompt.label")}>
         <Textarea
-          id={GENERATOR_FIELDS.prompt.id}
+          id="prompt"
           name="prompt"
-          placeholder={GENERATOR_FIELDS.prompt.placeholder}
+          placeholder={t("fields.prompt.placeholder")}
           rows={5}
           className={cn("min-h-28 resize-none", getFieldClassName("prompt"))}
           value={formData.prompt}
@@ -205,12 +204,12 @@ export function GeneratorForm({
         {isLoading ? (
           <>
             <Loader2 className="size-4 animate-spin" />
-            Generating asset...
+            {t("preview.loadingTitle")}
           </>
         ) : (
           <>
             <Wand2 className="size-4" />
-            {GENERATOR.generateLabel}
+            {buttons("generate")}
           </>
         )}
       </Button>

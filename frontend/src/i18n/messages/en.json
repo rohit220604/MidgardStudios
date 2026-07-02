@@ -1,0 +1,159 @@
+{
+  "brand": {
+    "name": "Midgard Studios",
+    "tagline": "AI-powered tools for game creators."
+  },
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "japanese": "日本語"
+  },
+  "navigation": {
+    "home": "Home",
+    "gallery": "Gallery",
+    "about": "About",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "buttons": {
+    "generate": "Generate",
+    "refresh": "Refresh",
+    "regenerate": "Regenerate",
+    "signIn": "Sign In",
+    "signInWithGoogle": "Sign In with Google",
+    "continueWithGoogle": "Continue with Google",
+    "redirecting": "Redirecting...",
+    "generateArtwork": "Generate Artwork",
+    "goToGenerator": "Go to Generator",
+    "cancelEditing": "Cancel Editing"
+  },
+  "generator": {
+    "title": "Concept Art Generator",
+    "subtitle": "Configure your creative direction and generate production-ready concept art.",
+    "editingPreviousPrompt": "Editing Previous Prompt",
+    "fields": {
+      "genre": {
+        "label": "Game Genre",
+        "placeholder": "e.g. Fantasy RPG, Sci-Fi Horror"
+      },
+      "environment": {
+        "label": "Environment",
+        "placeholder": "e.g. Ancient forest, neon megacity"
+      },
+      "style": {
+        "label": "Art Style",
+        "placeholder": "e.g. Concept art, painterly, cel-shaded"
+      },
+      "inspiredBy": {
+        "label": "Inspired By",
+        "placeholder": "Select an inspiration"
+      },
+      "prompt": {
+        "label": "Additional Prompt",
+        "placeholder": "Describe key subjects, mood, lighting, or composition details..."
+      }
+    },
+    "presets": {
+      "Custom": "Custom",
+      "Dark Souls": "Dark Souls",
+      "Elden Ring": "Elden Ring",
+      "Studio Ghibli": "Studio Ghibli",
+      "Cyberpunk 2077": "Cyberpunk 2077",
+      "Zelda": "Zelda",
+      "Norse Mythology": "Norse Mythology",
+      "JRPG": "JRPG"
+    },
+    "preview": {
+      "label": "Preview",
+      "empty": "Your generated artwork will appear here.",
+      "loadingTitle": "Creating concept art...",
+      "loadingDescription": "Invoking Gemini prompt optimizer and generating your assets with Pollinations AI.",
+      "errorTitle": "Generation Failed",
+      "errorDescription": "Please check your input values and try again.",
+      "saved": "Saved to Gallery",
+      "optimizedPrompt": "Optimized Prompt",
+      "loadingFooter": "Artistry in motion...",
+      "successFooter": "Generation complete. View in your Gallery.",
+      "emptyFooter": "Generated images will render in this panel"
+    },
+    "toasts": {
+      "signInRequired": "Please sign in to generate images.",
+      "missingFields": "Please fill in all inputs before generating.",
+      "success": "AI image generated successfully!"
+    }
+  },
+  "gallery": {
+    "title": "Gallery",
+    "subtitle": "Explore your collection of AI-generated assets and concepts.",
+    "myTitle": "My Gallery",
+    "mySubtitle": "A personalized space containing your AI-generated gaming assets and creations.",
+    "signInRequired": "Sign in required",
+    "signInDescription": "Please log in with Google to view and manage your generated concept art.",
+    "mySignInDescription": "You must be logged in to view your personalized asset generation gallery.",
+    "emptyTitle": "No concept art yet",
+    "emptyDescription": "Generate your first artwork to build your personal gallery.",
+    "myEmptyTitle": "No assets generated yet",
+    "myEmptyDescription": "Get started by returning to the generator home page and creating your first custom studio asset.",
+    "errors": {
+      "fetchFailed": "Failed to fetch gallery"
+    }
+  },
+  "about": {
+    "metadataTitle": "About",
+    "heroTitle": "About Midgard Studios",
+    "heroImageAlt": "Fantasy world concept art",
+    "intro1BeforeBrand": "",
+    "intro1AfterBrand": " is an AI-powered concept art platform built for game creators. It helps developers, designers, and artists transform structured ideas into visually compelling concept art within seconds.",
+    "intro2": "Instead of writing complex prompts manually, creators simply describe their world through intuitive inputs like game genre, environment, art style, inspiration, and additional details. Midgard Studios refines these ideas into optimized AI prompts, making concept creation faster, more consistent, and easier to iterate.",
+    "whyTitle": "Why \"Midgard\"?",
+    "why1BeforeBrand": "The name ",
+    "why1AfterBrand": " comes from Norse mythology, where it represents the realm of humans-a world filled with stories, exploration, creativity, and adventure.",
+    "why2BeforeBrand": "Just as Midgard connects countless journeys and legends, ",
+    "why2AfterBrand": " is designed as a creative space where ideas evolve into immersive game worlds through the power of AI.",
+    "featuresTitle": "Key Features",
+    "featuresSubtitle": "Everything you need to rapidly create, refine and organize game concept art.",
+    "features": {
+      "aiConcept": {
+        "title": "AI Concept Art Generation",
+        "description": "Transform structured ideas into high-quality game concept art using AI-powered prompt generation."
+      },
+      "personalGallery": {
+        "title": "Personal Gallery",
+        "description": "Every generated artwork is securely stored, allowing you to revisit, organize, and continue building your game world."
+      },
+      "promptRegeneration": {
+        "title": "Prompt Regeneration",
+        "description": "Iterate on previous concepts by editing existing prompts instead of starting over from scratch."
+      },
+      "builtForCreators": {
+        "title": "Built for Game Creators",
+        "description": "Designed specifically for game developers, artists, and indie studios with a structured creative workflow."
+      }
+    }
+  },
+  "auth": {
+    "signInTitle": "Sign In",
+    "signInDescription": "Sign in to your Midgard Studios account.",
+    "backHome": "Back to Home",
+    "loginSubtitle": "Sign in to generate assets and access your gallery",
+    "secureNotice": "Authorized access only. By continuing, you agree to our Terms.",
+    "openUserMenu": "Open user menu",
+    "userActions": "User actions",
+    "fallbackName": "Midgard Creator",
+    "myGallery": "My Gallery",
+    "logout": "Logout",
+    "avatarAlt": "User Avatar",
+    "signInFailed": "Sign in failed:"
+  },
+  "footer": {
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "Email",
+    "madeWith": "Made with",
+    "by": "by",
+    "author": "Rohit Jaliminchi"
+  },
+  "errors": {
+    "generateFailed": "Failed to generate image"
+  }
+}

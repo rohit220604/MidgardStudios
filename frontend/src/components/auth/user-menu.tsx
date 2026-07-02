@@ -1,12 +1,14 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { AvatarDropdown } from "./avatar-dropdown";
 
 export function UserMenu() {
-  const { user, status, isAuthenticated, isLoading } = useAuth();
+  const t = useTranslations("buttons");
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -19,13 +21,13 @@ export function UserMenu() {
   }
 
   return (
-    <Link href="/login" passHref legacyBehavior>
+    <Link href="/login">
       <Button
         variant="outline"
         size="sm"
         className="border-border hover:bg-muted text-foreground transition-all duration-200"
       >
-        Sign In
+        {t("signIn")}
       </Button>
     </Link>
   );

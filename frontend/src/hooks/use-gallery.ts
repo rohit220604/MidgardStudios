@@ -3,9 +3,11 @@ import axios from "axios";
 import { api } from "@/lib/api";
 import { consumeGalleryRefreshFlag } from "@/lib/regeneration";
 import type { Generation } from "@/types/generation";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 export function useGallery(userEmail?: string) {
+  const t = useTranslations("gallery.errors");
   const [generations, setGenerations] = useState<Generation[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,13 +28,13 @@ export function useGallery(userEmail?: string) {
           ? err.response.data.message
           : err instanceof Error
             ? err.message
-            : "Failed to fetch gallery";
+            : t("fetchFailed");
       setError(errMsg);
       toast.error(errMsg);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     if (userEmail) {

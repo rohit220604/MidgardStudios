@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/layout/navbar";
 import { SessionProvider } from "@/components/auth/session-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE } from "@/lib/constants";
@@ -31,9 +29,7 @@ export default function RootLayout({
     <html lang="en" className={`dark ${spaceGrotesk.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <SessionProvider>
-          <Navbar />
-          <main className="flex flex-1 flex-col">{children}</main>
-          <Footer />
+          {children}
           <Toaster />
         </SessionProvider>
       </body>

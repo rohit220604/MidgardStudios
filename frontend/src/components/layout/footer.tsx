@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin, FaEnvelope, FaHeart } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 import { Container } from "./container";
 
@@ -21,17 +22,20 @@ const socials = [
 ];
 
 export function Footer() {
+  const brand = useTranslations("brand");
+  const footer = useTranslations("footer");
+
   return (
     <footer className="mt-auto border-t border-border/60 bg-card/40">
       <Container className="py-10 md:py-12">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:items-start md:justify-between md:text-left">
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-foreground">
-              Midgard Studios
+              {brand("name")}
             </h3>
 
             <p className="text-sm text-muted-foreground">
-              AI-powered tools for game creators.
+              {brand("tagline")}
             </p>
           </div>
 
@@ -43,8 +47,8 @@ export function Footer() {
                 <a
                   key={name}
                   href={href}
-                  aria-label={name}
-                  title={name}
+                  aria-label={footer(name === "LinkedIn" ? "linkedin" : name.toLowerCase())}
+                  title={footer(name === "LinkedIn" ? "linkedin" : name.toLowerCase())}
                   {...(external && {
                     target: "_blank",
                     rel: "noopener noreferrer",
@@ -59,22 +63,22 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-border/60 pt-6">
-          <p className="flex flex-wrap items-center justify-center gap-1 text-sm text-muted-foreground">
-            <span>Made with</span>
+        <p className="flex flex-wrap items-center justify-center gap-1 text-sm text-muted-foreground">
+        <span>{footer("madeWith")}</span>
 
-            <FaHeart className="text-red-500" size={14} />
+        <FaHeart className="text-red-500" size={14} />
 
-            <span>by</span>
+        <span>{footer("by")}</span>
 
-            <a
-              href="https://www.linkedin.com/in/rohit-jaliminchi-98555224b/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium transition-colors hover:text-primary"
-            >
-              Rohit Jaliminchi
-            </a>
-          </p>
+        <a
+          href="https://www.linkedin.com/in/rohit-jaliminchi-98555224b/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium transition-colors hover:text-primary"
+        >
+          {footer("author")}
+        </a>
+      </p>
         </div>
       </Container>
     </footer>
