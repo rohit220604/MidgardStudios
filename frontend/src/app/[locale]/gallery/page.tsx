@@ -7,8 +7,35 @@ import { Button } from "@/components/ui/button";
 import { GenerationCard } from "@/components/gallery/generation-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/navigation";
-import { LogIn, Image as ImageIcon, RotateCw, Sparkles } from "lucide-react";
+import { LogIn, RotateCw, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
+
+function EmptyGalleryIllustration() {
+  return (
+    <svg
+      className="mb-6 size-32 text-muted-foreground/20"
+      viewBox="0 0 120 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      {/* Frame */}
+      <rect x="15" y="15" width="90" height="90" rx="12" stroke="currentColor" strokeWidth="1.5" />
+      {/* Inner image area */}
+      <rect x="28" y="28" width="64" height="64" rx="6" stroke="currentColor" strokeWidth="1" strokeDasharray="4 3" />
+      {/* Landscape hint */}
+      <path d="M30 72 L45 52 L60 62 L75 42 L90 72" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="42" cy="42" r="5" stroke="currentColor" strokeWidth="1" />
+      {/* Sparkle */}
+      <circle cx="85" cy="30" r="2.5" fill="currentColor" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="92" cy="26" r="1.5" fill="currentColor" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.5s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  );
+}
 
 export default function GalleryPage() {
   const t = useTranslations("gallery");
@@ -73,30 +100,35 @@ export default function GalleryPage() {
               <div key={i} className="space-y-4">
                 <Skeleton className="aspect-[4/3] w-full rounded-2xl bg-muted/60 animate-pulse" />
                 <div className="space-y-3">
+                  <Skeleton className="h-4 w-3/4 bg-muted/60 animate-pulse" />
                   <div className="flex gap-2">
-                    <Skeleton className="h-4 w-16 bg-muted/60 animate-pulse" />
-                    <Skeleton className="h-4 w-20 bg-muted/60 animate-pulse" />
+                    <Skeleton className="h-3 w-16 bg-muted/60 animate-pulse" />
+                    <Skeleton className="h-3 w-20 bg-muted/60 animate-pulse" />
                   </div>
-                  <Skeleton className="h-4 w-2/3 bg-muted/60 animate-pulse" />
-                  <Skeleton className="h-3 w-1/3 bg-muted/60 animate-pulse" />
+                  <div className="flex gap-2">
+                    <Skeleton className="h-8 flex-1 bg-muted/60 animate-pulse rounded-md" />
+                    <Skeleton className="h-8 flex-1 bg-muted/60 animate-pulse rounded-md" />
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         ) : generations.length === 0 ? (
           // Empty State Layout
-          <div className="rounded-2xl border border-dashed border-border/80 bg-card/25 p-16 text-center backdrop-blur-sm shadow-inner max-w-2xl mx-auto mt-6">
-            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-primary border border-primary/20 mb-6 shadow-sm">
-              <ImageIcon className="h-12 w-12 text-primary/80 animate-pulse" />
+          <div className="mx-auto mt-10 max-w-lg rounded-2xl border border-dashed border-border/60 bg-card/20 p-16 text-center backdrop-blur-sm shadow-inner animate-in fade-in duration-500">
+            <div className="mx-auto mb-6 flex justify-center">
+              <EmptyGalleryIllustration />
             </div>
-            <h3 className="text-xl font-semibold text-foreground tracking-tight">{t("emptyTitle")}</h3>
-            <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
+            <h3 className="text-xl font-semibold tracking-tight text-foreground">
+              {t("emptyTitle")}
+            </h3>
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
               {t("emptyDescription")}
             </p>
             <div className="mt-8">
               <Link href="/#generator">
-                <Button variant="default" className="px-6 gap-2">
-                  <Sparkles className="h-4.5 w-4.5" />
+                <Button variant="default" className="gap-2 px-6">
+                  <Sparkles className="size-4" />
                   {buttons("generateArtwork")}
                 </Button>
               </Link>

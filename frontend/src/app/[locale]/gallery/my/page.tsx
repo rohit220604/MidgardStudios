@@ -7,8 +7,36 @@ import { Button } from "@/components/ui/button";
 import { GenerationCard } from "@/components/gallery/generation-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/navigation";
-import { LogIn, Image as ImageIcon, RotateCw } from "lucide-react";
+import { LogIn, RotateCw, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
+
+function EmptyMyGalleryIllustration() {
+  return (
+    <svg
+      className="mb-6 size-32 text-muted-foreground/20"
+      viewBox="0 0 120 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      {/* Collection frame */}
+      <rect x="15" y="20" width="90" height="75" rx="10" stroke="currentColor" strokeWidth="1.5" />
+      {/* Empty slot 1 */}
+      <rect x="25" y="30" width="30" height="28" rx="4" stroke="currentColor" strokeWidth="1" strokeDasharray="3 2" />
+      {/* Empty slot 2 */}
+      <rect x="62" y="30" width="30" height="28" rx="4" stroke="currentColor" strokeWidth="1" strokeDasharray="3 2" />
+      {/* Empty slot 3 (wide) */}
+      <rect x="25" y="63" width="67" height="22" rx="4" stroke="currentColor" strokeWidth="1" strokeDasharray="3 2" />
+      {/* Plus icon */}
+      <path d="M40 44 L40 44 M40 42 L40 46 M38 44 L42 44" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M77 44 L77 44 M77 42 L77 46 M75 44 L79 44" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      {/* Star sparkle */}
+      <circle cx="90" cy="22" r="2.5" fill="currentColor" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2.2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  );
+}
 
 export default function MyGalleryPage() {
   const t = useTranslations("gallery");
@@ -72,26 +100,34 @@ export default function MyGalleryPage() {
             {[...Array(6)].map((_, i) => (
               <div key={i} className="space-y-4">
                 <Skeleton className="aspect-[4/3] w-full rounded-2xl bg-muted/60 animate-pulse" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-2/3 bg-muted/60 animate-pulse" />
-                  <Skeleton className="h-3 w-1/3 bg-muted/60 animate-pulse" />
+                <div className="space-y-3">
+                  <Skeleton className="h-4 w-3/4 bg-muted/60 animate-pulse" />
+                  <div className="flex gap-2">
+                    <Skeleton className="h-3 w-16 bg-muted/60 animate-pulse" />
+                    <Skeleton className="h-3 w-20 bg-muted/60 animate-pulse" />
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         ) : generations.length === 0 ? (
           // Empty State
-          <div className="rounded-2xl border border-dashed border-border/80 bg-card/25 p-16 text-center backdrop-blur-sm shadow-inner">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 mb-4 shadow-sm">
-              <ImageIcon className="h-6 w-6" />
+          <div className="mx-auto mt-10 max-w-lg rounded-2xl border border-dashed border-border/60 bg-card/20 p-16 text-center backdrop-blur-sm shadow-inner animate-in fade-in duration-500">
+            <div className="mx-auto mb-6 flex justify-center">
+              <EmptyMyGalleryIllustration />
             </div>
-            <h3 className="text-lg font-medium text-foreground">{t("myEmptyTitle")}</h3>
-            <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto">
+            <h3 className="text-xl font-semibold tracking-tight text-foreground">
+              {t("myEmptyTitle")}
+            </h3>
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
               {t("myEmptyDescription")}
             </p>
-            <div className="mt-6">
+            <div className="mt-8">
               <Link href="/#generator">
-                <Button variant="default">{buttons("goToGenerator")}</Button>
+                <Button variant="default" className="gap-2 px-6">
+                  <Sparkles className="size-4" />
+                  {buttons("generateArtwork")}
+                </Button>
               </Link>
             </div>
           </div>

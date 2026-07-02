@@ -1,16 +1,37 @@
 "use client";
 
-import { Calendar, RefreshCw } from "lucide-react";
+import { Calendar, Copy, Download, RefreshCw } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "@/i18n/navigation";
 import { saveRegenerationInput, toRegenerationInput } from "@/lib/regeneration";
+import { toast } from "sonner";
 import type { Generation } from "@/types/generation";
+
+import { ImageModal } from "./image-modal";
 
 interface GenerationCardProps {
   generation: Generation;
   variant?: "gallery" | "compact";
+}
+
+function downloadImage(imageUrl: string, prompt: string) {
+  const link = document.createElement("a");
+  link.href = imageUrl;
+  link.download = prompt
+    ? `${prompt.slice(0, 40).replace(/[^a-zA-Z0-9 ]/g, "").trim()}.png`
+    : "concept-art.png";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function copyPrompt(prompt: string) {
+  navigator.clipboard.writeText(prompt).then(() => {
+    toast.success("Prompt copied successfully.");
+  });
 }
 
 export function GenerationCard({
@@ -18,8 +39,10 @@ export function GenerationCard({
   variant = "gallery",
 }: GenerationCardProps) {
   const t = useTranslations("buttons");
+  const galleryT = useTranslations("gallery");
   const locale = useLocale();
   const router = useRouter();
+  const [modalOpen, setModalOpen] = useState(false);
   const createdAt = new Date(generation.createdAt).toLocaleDateString(locale);
 
   const handleRegenerate = () => {
@@ -27,96 +50,103 @@ export function GenerationCard({
     router.push("/#generator");
   };
 
-  if (variant === "compact") {
-    return (
-      <Card className="group overflow-hidden border border-border/80 bg-card/45 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-primary/50">
-        <div className="relative aspect-[4/3] overflow-hidden border-b border-border/40 bg-muted/30">
-          <img
-            src={generation.imageUrl}
-            alt={generation.prompt}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <span className="truncate font-mono text-[10px] text-muted-foreground/80">
-              ID: {generation.id}
-            </span>
-          </div>
-        </div>
-
-        <CardContent className="space-y-4 p-4">
-          <p className="line-clamp-3 text-sm leading-relaxed text-foreground/95 transition-all duration-300 hover:line-clamp-none">
-            {generation.prompt}
-          </p>
-
-          <div className="flex items-center justify-between border-t border-border/40 pt-3 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5 font-medium">
-              <Calendar className="h-3.5 w-3.5 text-primary/70" />
-                        {createdAt}
-            </span>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRegenerate}
-              className="h-7 gap-1 border-border/60 px-2.5 text-foreground transition-all duration-200 hover:bg-muted"
-            >
-              <RefreshCw className="h-3 w-3" />
-              {t("regenerate")}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className="group flex h-full flex-col overflow-hidden border border-border/80 bg-card/45 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-primary/50">
+  const cardContent = (
+    <>
+      {/* Image area */}
       <div className="relative aspect-[4/3] overflow-hidden border-b border-border/40 bg-muted/30">
         <img
           src={generation.imageUrl}
           alt={generation.prompt}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-
-        <div className="pointer-events-none absolute left-3 top-3 flex flex-wrap gap-1.5">
-          <span className="rounded-md border border-border/40 bg-background/80 px-2 py-0.5 text-[10px] font-semibold text-foreground text-opacity-95 shadow-sm backdrop-blur-xs">
-            {generation.genre}
-          </span>
-          <span className="rounded-md border border-border/40 bg-background/80 px-2 py-0.5 text-[10px] font-semibold text-foreground text-opacity-95 shadow-sm backdrop-blur-xs">
-            {generation.style}
-          </span>
-        </div>
-      </div>
-
-      <CardContent className="flex flex-1 flex-col justify-between gap-4 p-4">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span className="max-w-[150px] truncate font-semibold text-primary/80">
-              {generation.environment}
+        {/* Genre/style badges on image */}
+        {variant === "gallery" && (
+          <div className="pointer-events-none absolute left-3 top-3 flex flex-wrap gap-1.5">
+            <span className="rounded-md border border-border/40 bg-background/80 px-2 py-0.5 text-[10px] font-semibold text-foreground shadow-sm backdrop-blur-xs">
+              {generation.genre}
             </span>
-            <span className="flex items-center gap-1.5 font-medium">
-              <Calendar className="h-3.5 w-3.5 text-primary/60" />
-              {createdAt}
+            <span className="rounded-md border border-border/40 bg-background/80 px-2 py-0.5 text-[10px] font-semibold text-foreground shadow-sm backdrop-blur-xs">
+              {generation.style}
             </span>
           </div>
+        )}
+      </div>
 
-          <p className="line-clamp-3 text-sm leading-relaxed text-foreground/95 transition-all duration-300 hover:line-clamp-none">
-            {generation.prompt}
-          </p>
-        </div>
+      {/* Card body */}
+      <CardContent className="flex flex-1 flex-col justify-between gap-3 p-4">
+        {/* Prompt preview */}
+        <p className="line-clamp-2 text-sm leading-relaxed text-foreground/90 transition-all duration-300 hover:line-clamp-none">
+          {generation.prompt}
+        </p>
 
-        <div className="flex gap-2 border-t border-border/40 pt-3">
+        {/* Date + Regenerate row */}
+        <div className="flex items-center justify-between border-t border-border/40 pt-3 text-xs text-muted-foreground">
+          <span className="flex items-center gap-1.5 font-medium">
+            <Calendar className="size-3.5 text-primary/70" />
+            {createdAt}
+          </span>
           <Button
             variant="outline"
             size="sm"
-            onClick={handleRegenerate}
-            className="h-8 w-full gap-1.5 border-border/60 text-foreground transition-all duration-200 hover:bg-muted"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRegenerate();
+            }}
+            className="h-7 gap-1 border-border/60 px-2.5 text-foreground transition-all duration-200 hover:bg-muted"
           >
-            <RefreshCw className="h-3.5 w-3.5" />
+            <RefreshCw className="size-3" />
             {t("regenerate")}
           </Button>
         </div>
+
+        {/* Action buttons row */}
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              downloadImage(generation.imageUrl, generation.prompt);
+            }}
+            className="h-8 flex-1 gap-1.5 border-border/60 text-foreground transition-all duration-200 hover:bg-muted"
+          >
+            <Download className="size-3.5" />
+            {galleryT("downloadButton")}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              copyPrompt(generation.prompt);
+            }}
+            className="h-8 flex-1 gap-1.5 border-border/60 text-foreground transition-all duration-200 hover:bg-muted"
+          >
+            <Copy className="size-3.5" />
+            {galleryT("copyPromptButton")}
+          </Button>
+        </div>
       </CardContent>
-    </Card>
+    </>
+  );
+
+  return (
+    <>
+      <Card
+        className="group flex h-full cursor-pointer flex-col overflow-hidden border border-border/80 bg-card/45 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl"
+        onClick={() => setModalOpen(true)}
+      >
+        {cardContent}
+      </Card>
+
+      {modalOpen && (
+        <ImageModal
+          generation={generation}
+          onClose={() => setModalOpen(false)}
+          onCopyPrompt={copyPrompt}
+          onDownload={downloadImage}
+        />
+      )}
+    </>
   );
 }

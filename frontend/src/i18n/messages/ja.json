@@ -95,9 +95,13 @@
     "signInDescription": "生成したコンセプトアートを表示・管理するには、Googleでログインしてください。",
     "mySignInDescription": "パーソナルなアセット生成ギャラリーを表示するにはログインが必要です。",
     "emptyTitle": "コンセプトアートはまだありません",
-    "emptyDescription": "最初のアートワークを生成して、自分だけのギャラリーを作りましょう。",
+    "emptyDescription": "最初のアートワークを生成してコレクションを始めましょう。",
     "myEmptyTitle": "生成されたアセットはまだありません",
-    "myEmptyDescription": "ジェネレーターのホームページに戻って、最初のカスタムスタジオアセットを作成しましょう。",
+    "myEmptyDescription": "最初のカスタムスタジオアセットを作成しましょう。",
+    "downloadButton": "ダウンロード",
+    "copyPromptButton": "プロンプトをコピー",
+    "modalTitle": "画像詳細",
+    "closeModal": "閉じる",
     "errors": {
       "fetchFailed": "ギャラリーの取得に失敗しました"
     }

@@ -95,9 +95,13 @@
     "signInDescription": "Please log in with Google to view and manage your generated concept art.",
     "mySignInDescription": "You must be logged in to view your personalized asset generation gallery.",
     "emptyTitle": "No concept art yet",
-    "emptyDescription": "Generate your first artwork to build your personal gallery.",
+    "emptyDescription": "Generate your first artwork to begin your collection.",
     "myEmptyTitle": "No assets generated yet",
-    "myEmptyDescription": "Get started by returning to the generator home page and creating your first custom studio asset.",
+    "myEmptyDescription": "Get started by creating your first custom studio asset.",
+    "downloadButton": "Download",
+    "copyPromptButton": "Copy Prompt",
+    "modalTitle": "Image Details",
+    "closeModal": "Close",
     "errors": {
       "fetchFailed": "Failed to fetch gallery"
     }
